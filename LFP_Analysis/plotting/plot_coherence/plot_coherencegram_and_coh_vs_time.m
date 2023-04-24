@@ -6,7 +6,7 @@
 
 clear all; close all;
 
-monkey = "Schro";
+monkey = "Quigley";
 dir_in_test = 'E:\Output\GINO\test_stats\';
 dir_in_gram = 'E:\Output\GINO\coherence\avg_coherencegrams\';
 dir_in_time = 'E:\Output\GINO\coherence\coherence_vs_time\';
@@ -28,11 +28,15 @@ load(strcat(dir_in_time,sprintf('coherence_vs_time_rwd_%s.mat',monkey))); % coh_
 tsi = t_stats.ts(round(t_stats.ti));
 
 % theta and beta coherence vs time for DENSITY 
-plot_coherence_vs_time_density(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
+% plot_coherence_vs_time_density(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
+plot_phase_vs_time_density(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
+
 % theta and beta coherence vs time for REWARD
-plot_coherence_vs_time_rwd(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
+% plot_coherence_vs_time_rwd(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
+plot_phase_vs_time_rwd(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
+
 % coherencegram difference
-plot_coherencegram_difference(coh_avg_den,coh_avg_rwd,monkey,Events,dir_out_fig_gram,t_stats)
+% plot_coherencegram_difference(coh_avg_den,coh_avg_rwd,monkey,Events,dir_out_fig_gram,t_stats)
 
 
 

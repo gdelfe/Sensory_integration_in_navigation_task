@@ -29,13 +29,13 @@ for EventType = Events
                 std_theta_time = mean(coh_theta.^2 + std_theta.^2) - coh_theta_mu.^2; % std vs time
                 std_beta_time = mean(coh_beta.^2 + std_beta.^2) - coh_beta_mu.^2;
                 
-                %             % phase vs time
-                %             phase_theta = coh_avg_rwd.(den).reg_X.(reg_i).reg_Y.(reg_j).angle(:,theta_idx)'; % coherencegram theta band
-                %             phase_beta = coh_avg_rwd.(den).reg_X.(reg_i).reg_Y.(reg_j).angle(:,beta_idx)'; % coherencegram beta band
-                %
-                %             phase_theta_mu = mean(phase_theta); % average cohgram across theta frequency
-                %             phase_beta_mu = mean(phase_beta); % average cohgram across beta frequency
-                %
+                % phase vs time
+                phase_theta = coh_avg_rwd.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle(:,theta_idx)'; % coherencegram theta band
+                phase_beta = coh_avg_rwd.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle(:,beta_idx)'; % coherencegram beta band
+                
+                phase_theta_mu = circ_mean(phase_theta); % average cohgram across theta frequency
+                phase_beta_mu = circ_mean(phase_beta); % average cohgram across beta frequency
+                
                 %             std_theta_phase = coh_avg_den.(den).reg_X.(reg_i).reg_Y.(reg_j).angle_std(:,theta_idx)'; % coherencegram theta band std
                 %             std_beta_phase = coh_avg_den.(den).reg_X.(reg_i).reg_Y.(reg_j).angle_std(:,beta_idx)'; % coherencegram beta band std
                 %
@@ -50,6 +50,9 @@ for EventType = Events
                 coh_vs_time.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta = coh_beta_mu;
                 coh_vs_time.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_std = std_beta_time;
                 coh_vs_time.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_std = std_beta_time/sqrt(rand_ch*(rand_ch-1)/2*3*length(beta_idx)); % # SEM: divide std by # of channel pairs, # of sessions, # of frequency rows
+                
+                coh_vs_time.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle_theta = phase_theta_mu;
+                coh_vs_time.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle_beta = phase_beta_mu;
                 
             end % density loop
         end % region j loop

@@ -33,9 +33,10 @@ for EventType = Events
                     
                     
                 end % session loop
+                
                 % averages across session
                 coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram = mean(coh_tot,3);
-                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle = mean(angle_tot,3);
+                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle = circ_mean(angle_tot,[],3);
                 
                 % std across sessions
                 coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std = mean(coh_tot_std,3) - mean(coh_tot,3).^2;
