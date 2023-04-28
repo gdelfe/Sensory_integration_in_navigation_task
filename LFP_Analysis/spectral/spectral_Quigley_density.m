@@ -59,7 +59,7 @@ stats = spectral_features_monkey_density(experiments,Events,sess_range,ts_start,
 % stats_rwd = spectral_features_monkey(experiments,["reward"],[1,2,3],2,ts_start,ts_stop,W,f_max,Nt,Wt,dnt);
 
 
-save(strcat(dir_out,sprintf('stats_%s_all_events_density.mat',monkey)),'stats','-v7.3');
+save(strcat(dir_out,sprintf('stats_%s_all_events_rwd_only_trials_density.mat',monkey)),'stats','-v7.3');
 
 % save(strcat(dir_out,sprintf('stats_stop_%s.mat',monkey)),'stats_stop','-v7.3');
 % save(strcat(dir_out,sprintf('stats_rwd_%s.mat',monkey)),'stats_rwd','-v7.3');

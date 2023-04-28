@@ -18,6 +18,7 @@ function [high_ind, low_ind] = get_indx_density(experiments,sess,ind_rwd)
         else
             cnt = cnt+1;
         end
+
     end
-    
+
 end

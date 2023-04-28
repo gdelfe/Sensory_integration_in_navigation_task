@@ -12,10 +12,10 @@ dir_in = 'E:\Output\GINO\stats\';
 % % PARAMETERS
 Events = ["target","move","stop"];
 
-for monkey = ["Vik"]
+for monkey = ["Schro"]
     display([monkey])
-    load(strcat(dir_in,sprintf('stats_%s_all_events_density.mat',monkey)));
+    load(strcat(dir_in,sprintf('stats_%s_all_events_rwd_only_trials_density.mat',monkey)));
     % remove empty fields from the structure stats
     stats = remove_empty_fields_density(stats,Events)
-    save(strcat(dir_in,sprintf('stats_%s_all_events_density_clean.mat',monkey)),'stats','-v7.3');
+    save(strcat(dir_in,sprintf('stats_%s_all_events_rwd_only_trials_density_clean.mat',monkey)),'stats','-v7.3');
 end

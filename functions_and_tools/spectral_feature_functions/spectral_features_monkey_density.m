@@ -18,8 +18,8 @@ for sess = sess_range
     
     % get indexes of trials with target always OFF
     [ind_rwd1,ind_rwd2] = get_indx_trials_target_OFF_density(experiments,sess);
-    ind_rwd = [ind_rwd1,ind_rwd2];
-    
+%     ind_rwd = [ind_rwd1,ind_rwd2]; % include both rewarded and unrewarded trials 
+    ind_rwd = ind_rwd2; % include only rewarded trials 
     
     nch = length(experiments.sessions(sess).lfps); % number of channels
     for EventType = Events

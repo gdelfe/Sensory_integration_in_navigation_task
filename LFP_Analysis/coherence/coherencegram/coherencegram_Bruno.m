@@ -31,7 +31,7 @@ rwd_range = [1,2];
 
 load(strcat(dir_in,sprintf('stats_%s_all_events.mat',monkey)));
 stats_rwd = stats; clear stats;
-load(strcat(dir_in,sprintf('stats_%s_all_events_density_clean.mat',monkey)));
+load(strcat(dir_in,sprintf('stats_%s_all_events_rwd_only_trials_density_clean.mat',monkey)));
 stats_den = stats; clear stats;
 
 tapers = [0.5 5];
@@ -41,4 +41,6 @@ coh = compute_coherencegram_across_regions(stats_rwd,stats_den,Events,sess_range
 
 save(strcat(dir_out,sprintf('coherencegram_%s_all_events_v3.mat',monkey)),'coh','-v7.3');
 
-
+% v3 contains data for high/low density trials wrt to reward only trials:
+% basically in the computation of anything related to high/low density we
+% consider only the rewarded trials.

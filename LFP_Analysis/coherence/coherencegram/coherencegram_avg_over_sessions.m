@@ -10,16 +10,16 @@ dir_out_gram = 'E:\Output\GINO\coherence\avg_coherencegrams\';
 dir_out_time = 'E:\Output\GINO\coherence\coherence_vs_time\';
 
 density = ["high_den","low_den"];
-Events = ["target","move","stop"];
+Events = ["target","stop"];
 
 % frequency ranges in Hz
 theta = [3.9,10];
 beta = [15,30];
 rand_ch = 10; % number of channels used to compute the spectrograms for each regions
 
-load(strcat(dir_in,sprintf('coherencegram_%s_all_events_v2.mat',monkey))); % coh, coherencegram average across 10 channels per brain region
+load(strcat(dir_in,sprintf('coherencegram_%s_all_events_v3.mat',monkey))); % coh, coherencegram average across 10 channels per brain region
 
-reg_names = fieldnames(coh(1).high_den.move.reg_X); % brain regions name
+reg_names = fieldnames(coh(1).high_den.target.reg_X); % brain regions name
 
 % coherencegram averages across brain region for high/low density optic flow
 coh_avg_den = avg_cohgram_density_over_sessions(coh,density,reg_names,Events,rand_ch);
