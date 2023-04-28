@@ -46,11 +46,11 @@ for EventType = Events
                 
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_theta = coh_theta_mu;
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_theta_std = std_theta_time;
-                coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_theta_sem = std_theta_time/sqrt(rand_ch*(rand_ch-1)/2*3*length(theta_idx)); % # SEM: divide std by # of channel pairs, # of sessions, # of frequency rows
+                coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_theta_sem = std_theta_time/sqrt((rand_ch*(rand_ch-1)/2)*3*length(theta_idx)); % # SEM: divide std by # of channel pairs, # of sessions, # of frequency rows
                 
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta = coh_beta_mu;
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_std = std_beta_time;
-                coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_sem = std_beta_time/sqrt(rand_ch*(rand_ch-1)/2*3*length(beta_idx)); % # SEM: divide std by # of channel pairs, # of sessions, # of frequency rows
+                coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_sem = std_beta_time/sqrt((rand_ch*(rand_ch-1)/2)*3*length(beta_idx)); % # SEM: divide std by # of channel pairs, # of sessions, # of frequency rows
                 
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle_theta = phase_theta_mu;
                 coh_vs_time.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle_beta = phase_beta_mu;

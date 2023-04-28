@@ -25,7 +25,7 @@ dir_out = 'E:\Output\GINO\coherence\coherencegrams\';
 % Parameters
 % %%%%%%%%%%%%%%%%
 
-Events = ["target","move","stop"];
+Events = ["target","stop"];
 sess_range = [1,2,3];
 rwd_range = [1,2];
 
@@ -36,7 +36,7 @@ stats_den = stats; clear stats;
 
 tapers = [0.5 5];
 dn = 0.05;
-rand_ch = 10; % number of random channels chosen for each region
+rand_ch = 15; % number of random channels chosen for each region
 coh = compute_coherencegram_across_regions(stats_rwd,stats_den,Events,sess_range,100,tapers,dn,rand_ch);
 
 save(strcat(dir_out,sprintf('coherencegram_%s_all_events_v3.mat',monkey)),'coh','-v7.3');
