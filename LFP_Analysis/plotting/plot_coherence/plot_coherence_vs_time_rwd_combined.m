@@ -59,7 +59,7 @@ for EventType = Events
 %             grid on
             ylim([min([coh_1_T,coh_2_T,coh_1_B,coh_2_B])-D,max([coh_1_T,coh_2_T,coh_1_B,coh_2_B])+D])
             
-            fname = strcat(dir_fig_monkey_time,sprintf('rwd_%s_%s_THETA_BETA_coh_vs_time_%s_%s.png',monkey,EventType,reg_i,reg_j));
+            fname = strcat(dir_fig_monkey_time,sprintf('rwd_%s_%s_THETA_BETA_coh_vs_time_%s_%s.pdf',monkey,EventType,reg_i,reg_j));
             saveas(fig,fname)
             
             

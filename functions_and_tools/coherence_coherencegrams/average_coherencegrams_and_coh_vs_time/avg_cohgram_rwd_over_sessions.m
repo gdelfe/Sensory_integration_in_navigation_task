@@ -39,8 +39,8 @@ for EventType = Events
                 coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle = circ_mean(angle_tot,[],3);
                 
                 % std across sessions
-                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std = mean(coh_tot_std,3) - mean(coh_tot,3).^2;
-                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_sem = (mean(coh_tot_std,3) - mean(coh_tot,3).^2)/sqrt(rand_ch*(rand_ch-1)/2*3);
+                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std = sqrt(mean(coh_tot_std,3) - mean(coh_tot,3).^2);
+                coh_avg.rwd(r).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_sem = sqrt((mean(coh_tot_std,3) - mean(coh_tot,3).^2))/sqrt(rand_ch*(rand_ch-1)/2*3);
 
 %                 coh_avg.rwd(r).reg_X.(EventType).(reg_i).reg_Y.(reg_j).angle_std = mean(angle_tot_std,3) - mean(angle_tot,3).^2;
                 

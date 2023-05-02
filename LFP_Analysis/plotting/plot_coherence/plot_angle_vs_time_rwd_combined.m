@@ -49,11 +49,11 @@ for EventType = Events
             set(gcf, 'Position',  [100, 500, 700, 500])
             legend('HD Theta','LD Theta','HD Beta','LD Beta')
 %             grid on
-            ylim([-pi/2,pi/2])
+            ylim([-2*pi/3,2*pi/3])
             yticks([-pi -pi/2 0 pi/2 pi])
             yticklabels({'-\pi','-\pi/2','0','\pi/2','\pi'})    
             
-            fname = strcat(dir_fig_monkey_time,sprintf('rwd_%s_%s_THETA_BETA_phase_vs_time_%s_%s.png',monkey,EventType,reg_i,reg_j));
+            fname = strcat(dir_fig_monkey_time,sprintf('rwd_%s_%s_THETA_BETA_phase_vs_time_%s_%s.pdf',monkey,EventType,reg_i,reg_j));
             saveas(fig,fname)
             
             

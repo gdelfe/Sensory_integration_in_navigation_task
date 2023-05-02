@@ -4,7 +4,7 @@ clear all; close all;
 % %%%%%%%%%%%%%%%%
 % PATHS
 % %%%%%%%%%%%%%%%
-monkey = "Schro";
+monkey = "Vik";
 dir_in = 'E:\Output\GINO\coherence\coherencegrams\';
 dir_out_gram = 'E:\Output\GINO\coherence\avg_coherencegrams\';
 dir_out_time = 'E:\Output\GINO\coherence\coherence_vs_time\';
@@ -37,4 +37,7 @@ save(strcat(dir_out_gram,sprintf('avg_coherencegram_rwd_%s.mat',monkey)),'coh_av
 save(strcat(dir_out_time,sprintf('coherence_vs_time_density_%s.mat',monkey)),'coh_vs_time_den','-v7.3');
 save(strcat(dir_out_time,sprintf('coherence_vs_time_rwd_%s.mat',monkey)),'coh_vs_time_rwd','-v7.3');
  
+
+
+
 

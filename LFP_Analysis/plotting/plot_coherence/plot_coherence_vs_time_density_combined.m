@@ -59,7 +59,7 @@ for EventType = Events
 %             grid on
             ylim([min([coh_h_T,coh_L_T,coh_h_B,coh_L_B])-D,max([coh_h_T,coh_L_T,coh_h_B,coh_L_B])+D])
             
-            fname = strcat(dir_fig_monkey_time,sprintf('density_%s_%s_THETA_BETA_coh_vs_time_%s_%s.png',monkey,EventType,reg_i,reg_j));
+            fname = strcat(dir_fig_monkey_time,sprintf('density_%s_%s_THETA_BETA_coh_vs_time_%s_%s.pdf',monkey,EventType,reg_i,reg_j));
             saveas(fig,fname)
             
             

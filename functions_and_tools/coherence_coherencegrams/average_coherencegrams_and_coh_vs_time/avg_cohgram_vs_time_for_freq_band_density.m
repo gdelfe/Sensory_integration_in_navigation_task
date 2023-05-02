@@ -24,11 +24,11 @@ for EventType = Events
                 coh_theta_mu = mean(coh_theta); % average cohgram across theta frequency
                 coh_beta_mu = mean(coh_beta); % average cohgram across beta frequency
                 
-                std_theta = coh_avg_den.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std(:,theta_idx)'; % coherencegram theta band std
-                std_beta = coh_avg_den.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std(:,beta_idx)'; % coherencegram beta band std
+                std_theta = coh_avg_den.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std(:,theta_idx)'; % coherencegram theta band std across channels and sessions
+                std_beta = coh_avg_den.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).cohgram_std(:,beta_idx)'; % coherencegram beta band std across channels and sessions
                 
-                std_theta_time = mean(coh_theta.^2 + std_theta.^2) - coh_theta_mu.^2; % std vs time
-                std_beta_time = mean(coh_beta.^2 + std_beta.^2) - coh_beta_mu.^2;
+                std_theta_time = sqrt(mean(coh_theta.^2 + std_theta.^2) - coh_theta_mu.^2); % std vs time, across frequency, sessions, and channels 
+                std_beta_time = sqrt(mean(coh_beta.^2 + std_beta.^2) - coh_beta_mu.^2);
                 
                 % phase vs time
                 phase_theta = coh_avg_den.(den).(EventType).reg_X.(reg_i).reg_Y.(reg_j).angle(:,theta_idx)'; % coherencegram theta band

@@ -31,7 +31,7 @@ tsi = t_stats.ts(round(t_stats.ti));
 % plot_coherence_vs_time_density(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
 % plot_phase_vs_time_density(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
 
-% plot_coherence_vs_time_density_combined(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
+plot_coherence_vs_time_density_combined(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
 plot_angle_vs_time_density_combined(coh_vs_time_den,monkey,Events,dir_out_fig_time,tsi)
 
 % theta and beta coherence vs time for REWARD
@@ -39,6 +39,7 @@ plot_angle_vs_time_density_combined(coh_vs_time_den,monkey,Events,dir_out_fig_ti
 % plot_phase_vs_time_rwd(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
 
 plot_coherence_vs_time_rwd_combined(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
+plot_angle_vs_time_rwd_combined(coh_vs_time_rwd,monkey,Events,dir_out_fig_time,tsi)
 
 % coherencegram difference
 % plot_coherencegram_difference(coh_avg_den,coh_avg_rwd,monkey,Events,dir_out_fig_gram,t_stats)
