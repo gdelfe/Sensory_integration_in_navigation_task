@@ -35,12 +35,12 @@ for EventType = Events
             
              % High vs Low optic flow density - coherence vs time BETA
             coh_h_B = coh_vs_time_den.high_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta;
-            sem_h_B = coh_vs_time_den.high_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_std;
+            sem_h_B = coh_vs_time_den.high_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_sem;
             ci95 = sem_h_B.*norminv(0.975);
             shadedErrorBar(tsi,coh_h_B,ci95,'lineprops',{'color',"#e65c00"},'patchSaturation',0.5);
             
             coh_L_B = coh_vs_time_den.low_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta;
-            sem_L_B = coh_vs_time_den.low_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_std;
+            sem_L_B = coh_vs_time_den.low_den.(EventType).reg_X.(reg_i).reg_Y.(reg_j).coh_beta_sem;
             ci95 = sem_L_B.*norminv(0.975);
             shadedErrorBar(tsi,coh_L_B,ci95,'lineprops',{'color',"#ffc299"},'patchSaturation',0.4);
             

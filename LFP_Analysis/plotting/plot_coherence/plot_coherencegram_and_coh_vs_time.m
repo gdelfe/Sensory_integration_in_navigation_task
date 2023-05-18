@@ -6,7 +6,7 @@
 
 clear all; close all;
 
-monkey = "Schro";
+monkey = "Vik";
 dir_in_test = 'E:\Output\GINO\test_stats\';
 dir_in_gram = 'E:\Output\GINO\coherence\avg_coherencegrams\';
 dir_in_time = 'E:\Output\GINO\coherence\coherence_vs_time\';

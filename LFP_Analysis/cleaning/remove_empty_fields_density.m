@@ -11,7 +11,7 @@
 function stats = remove_empty_fields_density(stats,Events)
 
 reg_names = fieldnames(stats(1).region); % list of recorded brain regions (same for all sessions)
-density = ["high_den","low_den"];
+density = ["high_den_NR","low_den_NR","high_den_R","low_den_R"];
 
 for region = 1:length(reg_names)
     disp(['region ',num2str(region)])
