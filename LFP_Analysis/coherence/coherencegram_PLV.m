@@ -1,0 +1,65 @@
+
+% Compute coherengram across all channel pairs in region i and region j.
+% Compute the averages across channels for a give session. 
+%
+% Compute PLV and instantaneous phase difference across all trials and 
+% average across channels. 
+% 
+% Computations are done for one session, one event, and a given reg_i and
+% reg_j in order to parallelize the calculations on a HPC cluster.
+% 
+% INPUT: monkey name, session, event type, brain region i, brain region j
+%
+% OUTPUT: saved into two different structures: 1. coherencegram, 2. PLV and
+% phase differences.
+%
+% Gino Del Ferraro, NYU, May 2023.
+
+if nargin ~= 5
+    fprintf('Error. Input parameters are:  monkey, sess, EventType, region_i, region_j')
+    return;
+end 
+
+% %%%%%%%%%%%%%%%%
+% Parameters
+% %%%%%%%%%%%%%%%%
+
+% Read input parameters from command line
+
+%
+% monkey = "Quigley"
+% sess = 1;
+% EventType = "target";
+% reg_i = "MST"; 
+% reg_j = "PPC"; 
+
+% %%%%%%%%%%%%%%%%
+% PATHS
+% %%%%%%%%%%%%%%%
+
+% input and output directories 
+dir_in = 'E:\Output\GINO\stats\';
+dir_out = 'E:\Output\GINO\coherence\coherencegrams\all_channels\';
+dir_out_phase = 'E:\Output\GINO\coherence\phase_PLV\';
+
+
+% parameters for multi-tapers analysis 
+tapers = [0.5 5];
+dn = 0.05;
+fk = 100; % frequency upper value 
+
+% load stat density structure with LFPs data 
+load(strcat(dir_in,sprintf('stats_%s_all_events_R_NR_density_clean.mat',monkey)));
+
+
+% compute coherencegrams, PLV, and phase difference, across all channel-pairs, for a given session                                      
+[coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_regj_R_NR(stats,sess,EventType,reg_i,reg_j,fk,tapers,dn);
+      
+% save results 
+save(strcat(dir_out,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_j)),'coherencegram','-v7.3');
+save(strcat(dir_out_phase,sprintf('PLV_phase_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_j)),'PLV_sess','-v7.3');
+
+
+
+
+

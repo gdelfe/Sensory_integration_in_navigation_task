@@ -48,10 +48,10 @@ end
 % %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % mean and std coherencegram and phase-coherencegram across channels, for a given session
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_R",EventType,reg_i,reg_j,coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_R",EventType,reg_i,reg_j,coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",EventType,reg_i,reg_j,coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",EventType,reg_i,reg_j,coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_R",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_R",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
 
 % PLV and instantaneous phase difference mean and std across channels 
 PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_R",nch_i*nch_j,ts);
@@ -60,3 +60,4 @@ PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_NR",n
 PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_NR",nch_i*nch_j,ts);
 
 end
+
