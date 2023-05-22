@@ -1,20 +1,29 @@
-
+% Compute coherencegram, phase-locking-value, and instantaneous phase
+% difference between a pair of channels ch_i, ch_j in reg_i and reg_j
+% respectively.
+% 
+% The results for the coherence are computed across trials, results for PLV
+% and phase difference are averaged across trials.
+%
+% Gino Del Ferraro, NYU, May 2023
 
 function [cohgram,tf,f,PLV_ch] = coherence_and_PLV_and_phase_diff(stats_den,PLV_ch,cohgram,sess,EventType,reg_i,reg_j,optic_flow,ch_i,ch_j,tapers,fs,dn,fk)
 
 pad = 2;
 
+% LFPs signals 
 X1 = stats_den(sess).region.(reg_i).event.(EventType).(optic_flow).ch(ch_i).lfp';
 X2 = stats_den(sess).region.(reg_j).event.(EventType).(optic_flow).ch(ch_j).lfp';
 % -- coherence calculation via coherency()
 [coh,tf,f] = tfcoh(X1,X2,tapers,fs,dn,fk,pad,0.05,11);
-cohgram = cat(3,cohgram,coh);
+cohgram = cat(3,cohgram,coh); % concatenate coherencegram results across channels 
 
-% Phase Locking Value and Phase difference for theta and beta range 
+% Phase Locking Value and Phase difference for theta and beta range, averaged across trials 
 [PLV_theta,PLV_std_theta,phase_diff_theta,phase_diff_std_theta] = phase_locking_value(X1,X2,4,10,fs); % theta range [4-10] Hz
 [PLV_beta,PLV_std_beta, phase_diff_beta,phase_diff_std_beta] = phase_locking_value(X1,X2,15,30,fs); % beta range [15-30] Hz
 
-% store results to structures
+% store PLV and phase-difference results to structures, for each given pair
+% of channel ch_i and ch_j
 
 % theta range 
 PLV_ch.(optic_flow).PLV_theta = [PLV_ch.(optic_flow).PLV_theta,PLV_theta];

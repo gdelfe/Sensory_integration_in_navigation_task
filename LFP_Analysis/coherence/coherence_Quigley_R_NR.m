@@ -41,8 +41,8 @@ dn = 0.05;
 EventType = "target";
 sess = 1;
 fk = 100;
-reg_i = "MST"; reg_j = "PPC";
-coh = compute_coherencegram_regi_regj_R_NR(stats_den,EventType,sess,reg_i,reg_j,fk,tapers,dn);
+reg_i = "MST"; reg_j = "PPC";                                          
+[coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_regj_R_NR(stats_den,sess,EventType,reg_i,reg_j,fk,tapers,dn);
       
 
 save(strcat(dir_out,sprintf('coherencegram_%s_all_events_v3.mat',monkey)),'coh','-v7.3');
