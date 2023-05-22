@@ -30,9 +30,11 @@ Events = ["target","stop"];
 sess_range = [1,2,3];
 rwd_range = [1,2];
 
+% load stat density structure with LFPs data 
 load(strcat(dir_in,sprintf('stats_%s_all_events_R_NR_density_clean.mat',monkey)));
 stats_den = stats; clear stats;
 
+% parameters for multi-tapers analysis 
 tapers = [0.5 5];
 dn = 0.05;
 

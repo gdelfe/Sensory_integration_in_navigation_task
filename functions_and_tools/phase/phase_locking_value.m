@@ -27,7 +27,7 @@
 
 % @ Gino Del Ferraro, NYU, May 2023
 
-function [PLV] = phase_locking_value(low_cutoff,high_cutoff,Fs)
+function [PLV,PLV_std,circ_mean_phase_diff,circ_std_phase_diff] = phase_locking_value(y,z,low_cutoff,high_cutoff,Fs)
 
 % Assuming you have a 3D matrix for each signal with dimensions (time x trials x channels)
 % Example: y(time, trial, channel), z(time, trial, channel)
@@ -42,6 +42,9 @@ function [PLV] = phase_locking_value(low_cutoff,high_cutoff,Fs)
 
 % Create a second-order Butterworth filter
 [b,a] = butter(2, [low_cutoff high_cutoff]/(Fs/2), 'bandpass');
+
+y = y';
+z = z';
 
 % Get the number of trials
 num_trials = size(y, 2);
@@ -69,9 +72,16 @@ end
 phase_diff_all_trials = inst_phase_y_all_trials - inst_phase_z_all_trials;
 
 % Compute the circular mean of the phase difference across trials
-circ_mean_phase_diff = atan2(mean(sin(phase_diff_all_trials), 2), mean(cos(phase_diff_all_trials), 2));
+% circ_mean_phase_diff = atan2(mean(sin(phase_diff_all_trials), 2), mean(cos(phase_diff_all_trials), 2));
+circ_mean_phase_diff = circ_mean(phase_diff_all_trials,[],2);
+circ_std_phase_diff = circ_std(phase_diff_all_trials,[],[],2);
 
 % Calculate the Phase Locking Value (PLV)
-PLV = abs(mean(exp(1i * phase_diff_all_trials), 2));
+PLV = abs(mean(exp(1i * phase_diff_all_trials), 2)); % PLV mean across trials for a given channel-pair 
+PLV_std = std(exp(1i * phase_diff_all_trials),[], 2); % PLV std across trials for a given channel-pair
 
 end 
+
+
+
+
