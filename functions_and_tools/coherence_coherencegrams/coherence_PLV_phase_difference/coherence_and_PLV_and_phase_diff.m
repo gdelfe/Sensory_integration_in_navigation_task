@@ -14,6 +14,7 @@ pad = 2;
 % LFPs signals 
 X1 = stats_den(sess).region.(reg_i).event.(EventType).(optic_flow).ch(ch_i).lfp';
 X2 = stats_den(sess).region.(reg_j).event.(EventType).(optic_flow).ch(ch_j).lfp';
+
 % -- coherence calculation via coherency()
 [coh,tf,f] = tfcoh(X1,X2,tapers,fs,dn,fk,pad,0.05,11);
 cohgram = cat(3,cohgram,coh); % concatenate coherencegram results across channels 

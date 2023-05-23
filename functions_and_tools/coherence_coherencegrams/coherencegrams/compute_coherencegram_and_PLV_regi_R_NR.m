@@ -4,7 +4,7 @@
 %
 % Gino Del Ferraro, NYU, April 2023
 
-function [coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats_den,sess,EventType,reg_i,reg_i,fk,tapers,dn)
+function [coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats_den,sess,EventType,reg_i,fk,tapers,dn)
                                                                                
 display(['-- brain region i: ',num2str(reg_i),'-- brain region j: ',num2str(reg_i)])
 fs = 1/stats_den(1).prs.psd_s_rate; % sampling rate
@@ -29,7 +29,7 @@ for ch_i = 1:nch_i
        % Coherence, Phase Locking Value, and Phase Difference across
        % trials, for a given pair of channels i and j
        
-       % high density - reward 
+       % high density - reward                                   
        [coh_hd_R,tf,f,PLV_ch] = coherence_and_PLV_and_phase_diff(stats_den,PLV_ch,coh_hd_R,sess,EventType,reg_i,reg_i,"high_den_R",ch_i,ch_j,tapers,fs,dn,fk);           
        % low density - reward 
        [coh_ld_R,tf,f,PLV_ch] = coherence_and_PLV_and_phase_diff(stats_den,PLV_ch,coh_ld_R,sess,EventType,reg_i,reg_i,"low_den_R",ch_i,ch_j,tapers,fs,dn,fk);
@@ -52,11 +52,17 @@ end
 [coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
 [coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
 
+% number of trials 
+num_trials_HD_R = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_R.ch(1).lfp',2);
+num_trials_LD_R = size(stats_den(sess).region.(reg_i).event.(EventType).low_den_R.ch(1).lfp',2);
+num_trials_HD_NR = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_NR.ch(1).lfp',2);
+num_trials_LD_NR = size(stats_den(sess).region.(reg_i).event.(EventType).low_den_NR.ch(1).lfp',2);
+
 % PLV and instantaneous phase difference mean and std across channels 
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_R",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_R",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_NR",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_NR",nch_i*nch_j,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_R",nch_i*(nch_i-1)/2,num_trials_HD_R,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_R",nch_i*(nch_i-1)/2,num_trials_LD_R,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_NR",nch_i*(nch_i-1)/2,num_trials_HD_NR,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_NR",nch_i*(nch_i-1)/2,num_trials_LD_NR,ts);
 
 end
 

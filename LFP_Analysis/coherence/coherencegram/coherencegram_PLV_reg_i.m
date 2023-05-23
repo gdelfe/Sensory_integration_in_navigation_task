@@ -19,7 +19,7 @@ function [] = coherencegram_PLV_reg_i(monkey,sess,EventType,reg_i)
 
 addpath(genpath('C:\Users\gd2112\Documents\Navigation_task'))
 
-if nargin ~= 5
+if nargin ~= 4
     fprintf('Error. Input parameters are:  monkey, sess, EventType, region_i, region_j')
     return;
 end 
@@ -54,7 +54,7 @@ load(strcat(dir_in,sprintf('stats_%s_all_events_R_NR_density_clean.mat',monkey))
 
 
 % compute coherencegrams, PLV, and phase difference, across all channel-pairs, for a given session                                      
-[coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats,sess,EventType,reg_i,reg_i,fk,tapers,dn);
+[coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats,sess,EventType,reg_i,fk,tapers,dn);
       
 % save results 
 save(strcat(dir_out,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)),'coherencegram','-v7.3');

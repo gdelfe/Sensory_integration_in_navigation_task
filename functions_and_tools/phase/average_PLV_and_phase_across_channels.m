@@ -1,6 +1,6 @@
 
 
-function [PLV_sess] = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,optic_flow,n_pairs,ts)
+function [PLV_sess] = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,optic_flow,n_pairs,n_trials,ts)
 
 % % THETA RANGE 
 % PLV
@@ -25,5 +25,7 @@ PLV_sess.(optic_flow).phase_diff_std_beta = circ_mean((cell2mat(PLV_ch.(optic_fl
 % other parameters 
 PLV_sess.(optic_flow).ts = ts; % time variable 
 PLV_sess.(optic_flow).nch_pairs = n_pairs; % number of channel pairs
+PLV_sess.(optic_flow).num_trials = n_trials; % number of channel pairs
+
 
 end

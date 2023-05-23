@@ -53,11 +53,17 @@ end
 [coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
 [coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
 
+% number of trials 
+num_trials_HD_R = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_R.ch(1).lfp',2);
+num_trials_LD_R = size(stats_den(sess).region.(reg_i).event.(EventType).low_den_R.ch(1).lfp',2);
+num_trials_HD_NR = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_NR.ch(1).lfp',2);
+num_trials_LD_NR = size(stats_den(sess).region.(reg_i).event.(EventType).low_den_NR.ch(1).lfp',2);
+
 % PLV and instantaneous phase difference mean and std across channels 
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_R",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_R",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_NR",nch_i*nch_j,ts);
-PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_NR",nch_i*nch_j,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_R",nch_i*(nch_i-1)/2,num_trials_HD_R,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_R",nch_i*(nch_i-1)/2,num_trials_LD_R,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"high_den_NR",nch_i*(nch_i-1)/2,num_trials_HD_NR,ts);
+PLV_sess = average_PLV_and_phase_across_channels(PLV_sess,PLV_ch,"low_den_NR",nch_i*(nch_i-1)/2,num_trials_LD_NR,ts);
 
 end
 
