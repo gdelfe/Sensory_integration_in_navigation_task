@@ -8,6 +8,8 @@ function [] = pseudo_spectral_server_local_pc(monkey,N_iter,ID_job)
 % %%%%%%%%%%%%%%%
 % addpath(genpath('/scratch/gd2112/GINO_CODES/MATLAB'));
 
+disp(["test"])
+keyboard 
 dir_out = 'E:\Output\GINO\';
 dir_in_stats = strcat(dir_out,'stats\');
 dir_in_test = strcat(dir_out,'test_stats\');
