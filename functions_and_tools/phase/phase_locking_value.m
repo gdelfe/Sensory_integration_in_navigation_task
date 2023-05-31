@@ -30,7 +30,7 @@
 function [PLV,PLV_std,circ_mean_phase_diff,circ_std_phase_diff] = phase_locking_value(y,z,low_cutoff,high_cutoff,Fs)
 
 % Assuming you have a 3D matrix for each signal with dimensions (time x trials x channels)
-% Example: y(time, trial, channel), z(time, trial, channel)
+% Example: y(trial, time), z(trial, time)
 
 % Apply a bandpass filter to the signals to isolate the frequency band of interest
 % For instance, we'll use 8-12 Hz (alpha band), assuming a sampling rate of 1000 Hz
