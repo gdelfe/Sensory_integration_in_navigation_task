@@ -15,6 +15,13 @@ pad = 2;
 X1 = stats_den(sess).region.(reg_i).event.(EventType).(optic_flow).ch(ch_i).lfp';
 X2 = stats_den(sess).region.(reg_j).event.(EventType).(optic_flow).ch(ch_j).lfp';
 
+if reg_i == "MST" % if recording in MST, it is recorded with linear probe and should be scaled up by a factor 1000 to have it in micro-Volt
+    X1 = X1*1e3; % 
+end
+if reg_j == "MST" % if recording in MST, it is recorded with linear probe and should be scaled up by a factor 1000 to have it in micro-Volt
+    X1 = X1*1e3; % 
+end
+
 % -- coherence calculation via coherency()
 [coh,tf,f] = tfcoh(X1,X2,tapers,fs,dn,fk,pad,0.05,11);
 cohgram = cat(3,cohgram,coh); % concatenate coherencegram results across channels 

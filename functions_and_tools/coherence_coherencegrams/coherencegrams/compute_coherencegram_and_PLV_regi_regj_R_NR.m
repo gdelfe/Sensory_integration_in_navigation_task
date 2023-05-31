@@ -22,15 +22,17 @@ coherencegram = [];
 nch_i = length(stats_den(1).region.(reg_i).event.(EventType).high_den_NR.ch); 
 nch_j = length(stats_den(1).region.(reg_j).event.(EventType).high_den_NR.ch); 
 
+nch_i = 2;
+nch_j = 1;
 
 cnt = 1;
 for ch_i = 1:nch_i
     for ch_j = 1:nch_j
        
-            if mod(cnt,20) == 0
-		disp(["Pair ",num2str(cnt)," out of a total of ",num2str(nch_i*nch_j)," pairs"]);
-	    end
-	    cnt = cnt + 1;
+        if mod(cnt,20) == 0
+            disp(["Pair ",num2str(cnt)," out of a total of ",num2str(nch_i*nch_j)," pairs"]);
+        end
+        cnt = cnt + 1;
 
 
        % Coherence, Phase Locking Value, and Phase Difference across
@@ -54,10 +56,10 @@ end
 % %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % mean and std coherencegram and phase-coherencegram across channels, for a given session
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_R",coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_R",coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,"high_den_R",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,"low_den_R",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,"high_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
+[coherencegram] = store_coherencegram_results(coherencegram,"low_den_NR",coh_hd_R,f,tf,nch_i*nch_j);
 
 % number of trials 
 num_trials_HD_R = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_R.ch(1).lfp,2);

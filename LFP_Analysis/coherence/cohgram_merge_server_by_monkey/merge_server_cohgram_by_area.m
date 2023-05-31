@@ -1,5 +1,5 @@
 
-
+clear all; close all;
 % input and output directories 
 dir_in = 'E:\Output\GINO\cohgram_all_channels\';
 dir_in_phase = 'E:\Output\GINO\phase_PLV\';
@@ -14,33 +14,37 @@ EventType = "target";
 n_sess = 3;
 
 PLV_tot = {};
-cohgram_tot ={};
+cohgram_tot =[];
 
 
 for sess = 1:n_sess
 
     load(strcat(dir_in,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)));
     load(strcat(dir_in_phase,sprintf('PLV_phase_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)));
-    PLV_tot = [PLV_tot,PLV_sess];
-    cohgram_tot = [cohgram_tot,coherencegram];
+    PLV_tot{sess} = PLV_sess;
+    cohgram_tot{sess} = coherencegram;
+    clear coherencegram
     
 end
 
 
 ts = PLV_tot{1}.high_den_R.ts; % time range
 
+PLV_tot = length_structure(PLV_tot,n_sess); % make the structures the same length across section, if they were not (!!)
+
 % Create empty structure with the same field structure of PLV_sess and coherencegram 
 cohgram_mean = initializeStructure(cohgram_tot{1});
 PLV_mean = initializeStructure(PLV_tot{1});
+
 
 
 for sess = 1:n_sess
     
     % Iterate over the field names in the first level
     fieldNames = fieldnames(PLV_tot{1});
-    for i = 1:numel(fieldNames)
+    for i = 1 %:numel(fieldNames)
         fieldName = fieldNames{i};
-    
+         
         % % THETA
         % PLV 
         PLV_mean.(fieldName).PLV_theta = [PLV_mean.(fieldName).PLV_theta, PLV_tot{sess}.(fieldName).PLV_theta]; % concatenate mean PLV_theta across sessions 
@@ -57,7 +61,14 @@ for sess = 1:n_sess
         PLV_mean.(fieldName).phase_diff_beta = [PLV_mean.(fieldName).phase_diff_beta, PLV_tot{sess}.(fieldName).phase_diff_beta]; % concatenate mean PLV_theta across sessions 
         PLV_mean.(fieldName).phase_diff_std_beta = [PLV_mean.(fieldName).phase_diff_std_beta, PLV_tot{sess}.(fieldName).phase_diff_std_beta.^2 + PLV_tot{sess}.(fieldName).phase_diff_beta.^2]; % concatenate std^2 + mu^2 across session, for error propagation 
         
-        
+        % COHERENCEGRAMS
+        % Magnitude
+        cohgram_mean.(fieldName).cohgram = cat(3,cohgram_mean.(fieldName).cohgram, cohgram_tot{sess}.(fieldName).cohgram);
+        cohgram_mean.(fieldName).cohgram_std = cat(3,cohgram_mean.(fieldName).cohgram_std, ((cohgram_tot{sess}.(fieldName).cohgram).^2).*(cohgram_tot{sess}.(fieldName).cohgram_std).^2);
+        % Angle
+        cohgram_mean.(fieldName).angle = cat(3,cohgram_mean.(fieldName).angle, cohgram_tot{sess}.(fieldName).angle);
+        cohgram_mean.(fieldName).angle_std = cat(3,cohgram_mean.(fieldName).angle_std, ((cohgram_tot{sess}.(fieldName).angle).^2).*(cohgram_tot{sess}.(fieldName).angle_std).^2);
+
     end 
 end
 

@@ -53,10 +53,10 @@ end
 % %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % mean and std coherencegram and phase-coherencegram across channels, for a given session
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_R",coh_hd_R,f,tf,nch_i*(nch_i-1)/2); % number of pairs take into account that the matrix is symmetric and upper triangular
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_R",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"high_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
-[coherencegram] = store_coherencegram_results(coherencegram,sess,"low_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
+[coherencegram] = store_coherencegram_results(coherencegram,"high_den_R",coh_hd_R,f,tf,nch_i*(nch_i-1)/2); % number of pairs take into account that the matrix is symmetric and upper triangular
+[coherencegram] = store_coherencegram_results(coherencegram,"low_den_R",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
+[coherencegram] = store_coherencegram_results(coherencegram,"high_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
+[coherencegram] = store_coherencegram_results(coherencegram,"low_den_NR",coh_hd_R,f,tf,nch_i*(nch_i-1)/2);
 
 % number of trials 
 num_trials_HD_R = size(stats_den(sess).region.(reg_i).event.(EventType).high_den_R.ch(1).lfp,2);
