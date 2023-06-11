@@ -21,7 +21,7 @@ coherencegram = [];
 % number of channels for each region i and j
 nch_i = length(stats_den(1).region.(reg_i).event.(EventType).high_den_NR.ch); 
 
-nch_i = 2;
+nch_i = 3;
 
 cnt = 1;
 for ch_i = 1:nch_i
