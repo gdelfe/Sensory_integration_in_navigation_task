@@ -61,13 +61,14 @@ for sess = sess_range
                 stats(sess).region.(area).event.(EventType).low_den_R.ch(chnl).lfp = X(:,Lidx_remap_R); % low density/reward 
                 
                 
-%                 % % PSD High density optic flow
-%                 [spec_HD, f_psd] =  dmtspec(X(:,Hidx_remap)',[N/sampling W],sampling,f_max,2,0.05,1);
-%                 stats(sess).region.(area).event.(EventType).high_den.ch(chnl).psd = spec_HD;
-%                 
-%                 % % PSD Low density optic flow
-%                 [spec_LD, f_psd] =  dmtspec(X(:,Lidx_remap)',[N/sampling W],sampling,f_max,2,0.05,1);
-%                 stats(sess).region.(area).event.(EventType).low_den.ch(chnl).psd = spec_LD;
+                % % PSD High density optic flow
+                [spec_HD, f_psd] =  dmtspec(X(:,Hidx_remap)',[N/sampling W],sampling,f_max,2,0.05,1);
+                stats(sess).region.(area).event.(EventType).high_den.ch(chnl).psd = spec_HD;
+                
+                % % PSD Low density optic flow
+                [spec_LD, f_psd] =  dmtspec(X(:,Lidx_remap)',[N/sampling W],sampling,f_max,2,0.05,1);
+                stats(sess).region.(area).event.(EventType).low_den.ch(chnl).psd = spec_LD;
+                
 % 
 % %                 figure;
 % %                 plot(f_psd,log(abs(spec)))

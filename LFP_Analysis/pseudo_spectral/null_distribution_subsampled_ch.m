@@ -4,7 +4,7 @@
 % PSD and spectrogram for reward = 0/1 are computed by randomly swapping
 % the lfp reward in 0 with those in 1.
 %
-% The different channels and sessions are merged together to form a unique null
+% The different channels are merged together to form a unique null
 % distribution for each brain region, and each separate event (e.g. target,
 % move)
 %
@@ -64,6 +64,13 @@ for sess = sess_range
                 % Pseudo LFP -- Permuted lfp between rwd 1 and 2(incorrect/correct)
                 X1 = stats(sess).region.(reg).event.(EventType).rwd(1).ch(chnl).lfp; % lfp matrix -> time x trial
                 X2 = stats(sess).region.(reg).event.(EventType).rwd(2).ch(chnl).lfp; % lfp matrix -> time x trial
+               
+                if reg == "MST" % if recording in MST, it is recorded with linear probe and should be scaled up by a factor 1000 to have it in micro-Volt
+                    X1 = X1*1e3; %
+                    X2 = X2*1e3; %
+                end
+
+                
                 ts_size = length(ts);
                 
                 x_size = min([size(X1,1),size(X2,1),ts_size]);
@@ -74,7 +81,12 @@ for sess = sess_range
                 
                 % create matrices to store pseudo results across session, channels,and permutations
                 log_psd_diff_mat_ch = zeros(permutations,length(psd_f)); % psd
+                log_psd_pseudo_rwd_ch = zeros(permutations,length(psd_f)); % psd
+                log_psd_pseudo_norwd_ch = zeros(permutations,length(psd_f)); % psd
+                
                 log_spec_diff_mat_ch = zeros(permutations,length(t_spec),length(f_spec)); % spectrogram
+                log_spec_pseudo_rwd_ch = zeros(permutations,length(t_spec),length(f_spec)); % spectrogram
+                log_spec_pseudo_norwd_ch = zeros(permutations,length(t_spec),length(f_spec)); % spectrogram
              	
                 rng(ID_job,'twister');
                 for i = 1:permutations
@@ -109,7 +121,9 @@ for sess = sess_range
                     [spec_2, f_psd] =  dmtspec(X2_pseudo',[N/sampling W],sampling,f_max,2,0.05,1);
                    
                     % Pseudo Log(PSD) difference
-                    log_psd_diff_mat_ch(i,:) = log(spec_1) - log(spec_2);
+                    log_psd_pseudo_rwd_ch(i,:) = log10(spec_1); % pseudo reward 
+                    log_psd_pseudo_norwd_ch(i,:) = log10(spec_2); % pseudo no reward
+                    log_psd_diff_mat_ch(i,:) = log10(spec_1) - log10(spec_2);
                     
                     %                 figure;
                     %                 plot(f_psd,log(abs(spec)))
@@ -122,13 +136,20 @@ for sess = sess_range
                     [tf_spec_2, spec_f, ti] = tfspec(X2_pseudo',[Nt Wt], sampling, dnt, f_max, 2, 0.05, 1); % pseudo spectrogram reward = 2
                     
                     % Pseudo Spectrogram difference
-                    log_tf_spec_diff_mat_ch(i,:,:) = log(tf_spec_1) - log(tf_spec_2);
+                    log_spec_pseudo_rwd_ch(i,:,:) = log10(tf_spec_1);
+                    log_spec_pseudo_norwd_ch(i,:,:) = log10(tf_spec_2);
+                    log_tf_spec_diff_mat_ch(i,:,:) = log10(tf_spec_1) - log10(tf_spec_2);
                     
                 end % permutation loop
                 
                 pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_diff_mat = log_psd_diff_mat_ch ; % null distribution for the spectrum/psd by channel
+                pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_pseudo_rwd_mat = log_psd_pseudo_rwd_ch ;
+                pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_pseudo_norwd_mat = log_psd_pseudo_norwd_ch ;
+                
                 pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_diff_mat = log_tf_spec_diff_mat_ch ; % null distribution for the spectrum/psd by channel
-                clear log_psd_diff_mat_ch log_tf_spec_diff_mat_ch
+                pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_spec_pseudo_rwd_mat = log_spec_pseudo_rwd_ch ;
+                pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_spec_pseudo_norwd_mat = log_spec_pseudo_norwd_ch ;
+                clear log_psd_diff_mat_ch log_tf_spec_diff_mat_ch log_psd_pseudo_rwd_ch log_psd_pseudo_norwd_ch log_spec_pseudo_rwd_ch log_spec_pseudo_norwd_ch
                 %                 figure;
                 %                 tvimage(spec_diff);
                 % %                 colormap(bone)

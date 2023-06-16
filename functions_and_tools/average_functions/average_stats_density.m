@@ -12,8 +12,7 @@
 
 
 
-function t_stats = average_stats_density(stats,Events,theta_band,beta_band)
-
+function t_stats = average_stats_density(stats,Events,theta_band,beta_band,density)
 
 fs = stats(1).prs.f_spec; % spectrogram frequency
 theta_idx = find(fs >= theta_band(1) & fs < theta_band(2)); % theta-range index
@@ -25,7 +24,7 @@ Ntheta = length(theta_idx); % how many frequency values in theta frequency band
 Nbeta = length(beta_idx); % how many frequency values in beta frequency band
 
 reg_names = fieldnames(stats(1).region);
-density = ["high_den","low_den"]; 
+
 for region = 1:length(reg_names)
  
     for EventType = Events

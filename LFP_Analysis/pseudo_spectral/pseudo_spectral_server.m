@@ -34,7 +34,7 @@ iterations = str2double(N_iter);
 ID_job = str2double(ID_job);
 f_max = 100; % max frequency for PSD (Hz)
 sess_range = [1,2,3];
-Events = ["target","move","stop"];
+Events = ["target","move"];
 filename_null = sprintf('%s_iter_%d_ID_%d',monkey,iterations,ID_job);
 ts = t_stats.ts;
 ti = t_stats.ti;
@@ -58,7 +58,7 @@ pseudo_stats = null_distribution_subsampled_ch(stats,Events,sess_range,f_max,ite
 
 
 disp(['Saving psuedo stats ...'])
-save(strcat(dir_out_null,sprintf('pseudo_stats_%s_all_events.mat',filename_null)),'pseudo_stats','-v7.3');
+save(strcat(dir_out_null,sprintf('pseudo_stats_%s_diff_rwd_norwd.mat',filename_null)),'pseudo_stats','-v7.3');
 
 end
 

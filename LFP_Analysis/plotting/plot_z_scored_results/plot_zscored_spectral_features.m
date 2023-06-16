@@ -20,6 +20,8 @@ tsi = t_stats.ts(round(t_stats.ti));
 f = t_stats.f_psd; % psd frequency 
 ti = t_stats.ti;
 f_spec = t_stats.f_spec;
+[m, id] = min(abs(f_spec-50)); % find the index of max f_spec at 50 Hz
+f_spec = f_spec(1:id); % get frequency from 0 to 50 Hz
 % region names
 reg_names = fieldnames(t_stats(1).region);
 t = ts(round(ti));
