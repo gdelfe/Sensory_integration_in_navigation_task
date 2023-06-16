@@ -11,12 +11,12 @@
 %
 % @ Gino Del Ferraro, NYU, Jan 2023
 
-function Zscored_stats = zscore_and_cluster_correction_for_variable_ch(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,quantity,z_th)
+function Zscored_stats = zscore_and_cluster_correction_for_difference(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,quantity,z_th)
 
 quantity_avg = ['avg_',quantity];
 null_avg = [quantity,'_log_diff_avg'];
 null_std = [quantity,'_log_diff_std'];
-quantity_clust_list = [quantity,'_clust_list'];
+quantity_clust_list = [quantity,'_diff_clust'];
 
 % theta spectrogram difference - test statistics
 log_diff =  t_stats.region.(reg).event.(EventType).rwd(1).(quantity_avg) - t_stats.region.(reg).event.(EventType).rwd(2).(quantity_avg);

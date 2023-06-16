@@ -15,7 +15,7 @@ S = 50;
 
 dir_main = 'E:\Output\GINO\';
 dir_in_null = 'E:\Output\GINO\pseudo_stats\';
-dir_IDs =  'E:\Output\GINO\pseudo_stats\server_results\';
+dir_IDs =  'E:\Output\GINO\pseudo_stats\server_results\rwd_no_rwd_diff_and_singles\';
 dir_in_test = 'E:\Output\GINO\test_stats\';
 
 
@@ -43,7 +43,7 @@ if ~exist(dir_out_clust, 'dir')
     mkdir(dir_out_clust)
 end
 
-save(strcat(dir_out_clust,sprintf('cluter_distribution_%s_p_th_%.2f_iter_%d_all_events.mat',monkey,p_th,iter)),'cluster','-v7.3');
+save(strcat(dir_out_clust,sprintf('cluter_distribution_%s_p_th_%.2f_iter_%d_diff_rwd_norwd.mat',monkey,p_th,iter)),'cluster','-v7.3');
 % load(strcat(dir_out_clust,sprintf('cluter_distribution_%s_p_th_%.2f_iter_%d_all_events.mat',monkey,p_th,iter)));
 
 

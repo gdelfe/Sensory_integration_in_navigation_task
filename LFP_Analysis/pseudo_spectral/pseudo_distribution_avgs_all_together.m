@@ -46,8 +46,12 @@ for region = 1:length(reg_names)
         pseudo_mean_distr.region.(reg).event.(EventType).spec_log_rwd = zeros(iter*max_ID,length(t_spec),length(fs));
         pseudo_mean_distr.region.(reg).event.(EventType).spec_log_norwd = zeros(iter*max_ID,length(t_spec),length(fs));
         
-        pseudo_mean_distr.region.(reg).event.(EventType).beta_t_log_diff = zeros(iter*max_ID,length(t_spec));
+        pseudo_mean_distr.region.(reg).event.(EventType).theta_t_log_diff = zeros(iter*max_ID,length(t_spec));
         pseudo_mean_distr.region.(reg).event.(EventType).theta_t_log_rwd = zeros(iter*max_ID,length(t_spec));
+        pseudo_mean_distr.region.(reg).event.(EventType).theta_t_log_norwd = zeros(iter*max_ID,length(t_spec));
+        
+        pseudo_mean_distr.region.(reg).event.(EventType).beta_t_log_diff = zeros(iter*max_ID,length(t_spec));
+        pseudo_mean_distr.region.(reg).event.(EventType).beta_t_log_rwd = zeros(iter*max_ID,length(t_spec));
         pseudo_mean_distr.region.(reg).event.(EventType).beta_t_log_norwd = zeros(iter*max_ID,length(t_spec));
     end
 end
