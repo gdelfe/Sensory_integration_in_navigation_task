@@ -16,13 +16,13 @@ dir_in = 'E:\Output\GINO\stats\';
 dir_out = 'E:\Output\GINO\test_stats\';
 
 % % PARAMETERS
-Events = ["target","move","stop"];
+Events = ["target","move"];
 % frequency ranges in Hz
 theta = [3.9,10];
 beta = [15,30];
 
 % FOR ALL MONKEYS --------------------
-for monkey = ["Vik"]
+for monkey = ["Bruno"]
     
 %     load(strcat(dir_in,sprintf('stats_%s_all_events.mat',monkey)));
     

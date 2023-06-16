@@ -5,13 +5,13 @@ clear all; close all;
 % PARAMETERS
 % %%%%%%%%%%%%%%
 
-monkey = "Vik";
+monkey = "Bruno";
 p_th = 0.05; % p-value threshold 
 iter = 5 ;
 sess_range = [1,2,3];
-Events = ["target","move","stop"];
-max_ID = 1000;
-S = 5000;
+Events = ["target"];
+max_ID = 10;
+S = 50;
 
 dir_main = 'E:\Output\GINO\';
 dir_in_null = 'E:\Output\GINO\pseudo_stats\';
@@ -20,7 +20,7 @@ dir_in_test = 'E:\Output\GINO\test_stats\';
 
 
 
-load(strcat(dir_in_null,sprintf('pseudo_avg_%s_tot_iter_%d_all_events.mat',monkey,S))); % pseudo distribution averages, pseudo_avg
+load(strcat(dir_in_null,sprintf('pseudo_avg_%s_tot_iter_%d_diff_rwd_norwd.mat',monkey,S))); % pseudo distribution averages, pseudo_avg
 load(strcat(dir_in_test,sprintf('test_stats_%s_all_events.mat',monkey))); % test-statistics, t_stats
 
 

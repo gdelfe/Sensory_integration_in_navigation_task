@@ -1,3 +1,5 @@
+addpath(genpath('C:\Users\gd2112\Documents\LFP_firefly'))
+addpath(genpath('C:\Users\gd2112\Documents\MATLAB'))
 
 experiments = experiment('firefly-monkey');
 % experiments.AddSessions(44,34,{'behv','lfps'})

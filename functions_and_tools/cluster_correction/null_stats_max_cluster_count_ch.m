@@ -39,10 +39,23 @@ for region = 1:length(reg_names)
     reg = reg_names{region};
     for EventType = Events
         
-        cluster.region.(reg).event.(EventType).psd_clust_list = [];
-        cluster.region.(reg).event.(EventType).spec_clust_list = [];
-        cluster.region.(reg).event.(EventType).theta_t_clust_list = [];
-        cluster.region.(reg).event.(EventType).beta_t_clust_list = [];
+        % REWARD
+        cluster.region.(reg).event.(EventType).psd_rwd_clust = [];
+        cluster.region.(reg).event.(EventType).spec_rwd_clust = [];
+        cluster.region.(reg).event.(EventType).theta_t_rwd_clust = [];
+        cluster.region.(reg).event.(EventType).beta_t_rwd_clust = [];
+        
+        % NO REWARD
+        cluster.region.(reg).event.(EventType).psd_norwd_clust = [];
+        cluster.region.(reg).event.(EventType).spec_norwd_clust = [];
+        cluster.region.(reg).event.(EventType).theta_t_norwd_clust = [];
+        cluster.region.(reg).event.(EventType).beta_t_norwd_clust = [];
+        
+        % DIFFERENCE 
+        cluster.region.(reg).event.(EventType).psd_diff_clust = [];
+        cluster.region.(reg).event.(EventType).spec_diff_clust = [];
+        cluster.region.(reg).event.(EventType).theta_t_diff_clust = [];
+        cluster.region.(reg).event.(EventType).beta_t_diff_clust = [];
         
         
     end
@@ -52,54 +65,142 @@ end
 
 for ID = 1:max_ID % for all the pseudo spectrograms 
     display(['Monkey ', num2str(monkey),' - ID ',num2str(ID)])
-    load(strcat(dir_in_null,sprintf('%s\\pseudo_stats_%s_iter_%d_ID_%d_all_events.mat',monkey,monkey,Niter,ID)));
+    load(strcat(dir_in_null,sprintf('%s\\pseudo_stats_%s_iter_%d_ID_%d_diff_rwd_norwd.mat',monkey,monkey,Niter,ID)));
     
     
     for region = 1:length(reg_names)
         reg = reg_names{region};
         for EventType = Events
             
+            
             nch = length(pseudo_stats(1).region.(reg).event.(EventType).ch);
-            psd = zeros(Niter,length(psd_f),nsess*nch);
-            spec = zeros(Niter,length(t_spec),length(f_spec),nsess*nch);
-            theta_tf = zeros(Niter,length(t_spec),length(theta_idx),nsess*nch);
-            beta_tf = zeros(Niter,length(t_spec),length(beta_idx),nsess*nch);
+            % REWARD 
+            psd_rwd = zeros(Niter,length(psd_f),nsess*nch);
+            spec_rwd = zeros(Niter,length(t_spec),length(f_spec),nsess*nch);
+            theta_tf_rwd = zeros(Niter,length(t_spec),length(theta_idx),nsess*nch);
+            beta_tf_rwd = zeros(Niter,length(t_spec),length(beta_idx),nsess*nch);
+            
+            
+            psd_norwd = zeros(Niter,length(psd_f),nsess*nch);
+            spec_norwd = zeros(Niter,length(t_spec),length(f_spec),nsess*nch);
+            theta_tf_norwd = zeros(Niter,length(t_spec),length(theta_idx),nsess*nch);
+            beta_tf_norwd = zeros(Niter,length(t_spec),length(beta_idx),nsess*nch);
+            
+            
+            psd_diff = zeros(Niter,length(psd_f),nsess*nch);
+            spec_diff = zeros(Niter,length(t_spec),length(f_spec),nsess*nch);
+            theta_tf_diff = zeros(Niter,length(t_spec),length(theta_idx),nsess*nch);
+            beta_tf_diff = zeros(Niter,length(t_spec),length(beta_idx),nsess*nch);
             
             cs = 1;
             for sess = sess_range
                 for chnl = 1:nch
                     
-                    psd(:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_diff_mat;
-                    spec(:,:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_diff_mat;
-                    theta_tf(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_diff_mat(:,:,theta_idx),3);
-                    beta_tf(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_diff_mat(:,:,beta_idx),3);
+                    % REWARD
+                    psd_rwd(:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_rwd_mat;
+                    spec_rwd(:,:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_rwd_mat;
+                    theta_tf_rwd(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_theta_tf_rwd_mat(:,:,theta_idx),3);
+                    beta_tf_rwd(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_beta_tf_rwd_mat(:,:,beta_idx),3);
+                    
+                    % NO REWARD 
+                    psd_norwd(:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_norwd_mat;
+                    spec_norwd(:,:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_norwd_mat;
+                    theta_tf_norwd(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_theta_tf_norwd_mat(:,:,theta_idx),3);
+                    beta_tf_norwd(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_beta_tf_norwd_mat(:,:,beta_idx),3);
+                    
+                    % DIFFERENCE
+                    psd_diff(:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_diff_mat;
+                    spec_diff(:,:,:,cs) = pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_tf_spec_diff_mat;
+                    theta_tf_diff(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_theta_tf_diff_mat(:,:,theta_idx),3);
+                    beta_tf_diff(:,:,cs) = mean(pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_beta_tf_diff_mat(:,:,beta_idx),3);
+                    
                     cs = cs + 1;
                 end
             end
             
             % pseudo mean across sessions and channels
-            psd_mean = mean(psd,3);
-            spec_mean = mean(spec,4);
-            theta_t_mean = mean(mean(theta_tf,4),3);
-            beta_t_mean = mean(mean(beta_tf,4),3);
-              
+            
+            % REWARD
+            psd_mean_rwd = mean(psd_rwd,3);
+            spec_mean_rwd = mean(spec_rwd,4);
+            theta_t_mean_rwd = mean(mean(theta_tf_rwd,4),3);
+            beta_t_mean_rwd = mean(mean(beta_tf_rwd,4),3);
+            
+            % NO REWARD
+            psd_mean_norwd = mean(psd_norwd,3);
+            spec_mean_norwd = mean(spec_norwd,4);
+            theta_t_mean_norwd = mean(mean(theta_tf_norwd,4),3);
+            beta_t_mean_norwd = mean(mean(beta_tf_norwd,4),3);
+
+            % DIFFERENCE
+            psd_mean_diff = mean(psd_diff,3);
+            spec_mean_diff = mean(spec_diff,4);
+            theta_t_mean_diff = mean(mean(theta_tf_diff,4),3);
+            beta_t_mean_diff = mean(mean(beta_tf_diff,4),3);
+            
             
             % matrices to store the z-score permuted data of the null distribution
+            
+            z_psd_rwd_mat = zeros(Niter,length(psd_f)); % psd
+            z_spec_rwd_mat = zeros(Niter,length(t_spec),length(f_spec)); % spectrogram
+            z_theta_rwd_mat = zeros(Niter,length(t_spec)); % theta band only
+            z_beta_rwd_mat = zeros(Niter,length(t_spec));  % beta band only
+            
+            z_psd_norwd_mat = zeros(Niter,length(psd_f)); % psd
+            z_spec_norwd_mat = zeros(Niter,length(t_spec),length(f_spec)); % spectrogram
+            z_theta_norwd_mat = zeros(Niter,length(t_spec)); % theta band only
+            z_beta_norwd_mat = zeros(Niter,length(t_spec));  % beta band only
+            
+            
             z_psd_diff_mat = zeros(Niter,length(psd_f)); % psd
             z_spec_diff_mat = zeros(Niter,length(t_spec),length(f_spec)); % spectrogram
             z_theta_diff_mat = zeros(Niter,length(t_spec)); % theta band only
             z_beta_diff_mat = zeros(Niter,length(t_spec));  % beta band only
             
+            
             % zscore each pseudo psd, theta_t, beta_t, for each iteration
-            z_psd_diff_mat = (psd_mean - pseudo_avg.region.(reg).event.(EventType).psd_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).psd_log_diff_std;
-            z_theta_diff_mat = (theta_t_mean - pseudo_avg.region.(reg).event.(EventType).theta_t_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).theta_t_log_diff_std;
-            z_beta_diff_mat = (beta_t_mean - pseudo_avg.region.(reg).event.(EventType).beta_t_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).beta_t_log_diff_std;
+            z_psd_rwd_mat = (psd_mean_rwd - pseudo_avg.region.(reg).event.(EventType).psd_log_rwd_avg)./pseudo_avg.region.(reg).event.(EventType).psd_log_rwd_std;
+            z_theta_rwd_mat = (theta_t_mean_rwd - pseudo_avg.region.(reg).event.(EventType).theta_t_log_rwd_avg)./pseudo_avg.region.(reg).event.(EventType).theta_t_log_rwd_std;
+            z_beta_rwd_mat = (beta_t_mean_rwd - pseudo_avg.region.(reg).event.(EventType).beta_t_log_rwd_avg)./pseudo_avg.region.(reg).event.(EventType).beta_t_log_rwd_std;
+
+
+            z_psd_norwd_mat = (psd_mean_norwd - pseudo_avg.region.(reg).event.(EventType).psd_log_norwd_avg)./pseudo_avg.region.(reg).event.(EventType).psd_log_norwd_std;
+            z_theta_norwd_mat = (theta_t_mean_norwd - pseudo_avg.region.(reg).event.(EventType).theta_t_log_norwd_avg)./pseudo_avg.region.(reg).event.(EventType).theta_t_log_norwd_std;
+            z_beta_norwd_mat = (beta_t_mean_norwd - pseudo_avg.region.(reg).event.(EventType).beta_t_log_norwd_avg)./pseudo_avg.region.(reg).event.(EventType).beta_t_log_norwd_std;
+
+            z_psd_diff_mat = (psd_mean_diff - pseudo_avg.region.(reg).event.(EventType).psd_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).psd_log_diff_std;
+            z_theta_diff_mat = (theta_t_mean_diff - pseudo_avg.region.(reg).event.(EventType).theta_t_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).theta_t_log_diff_std;
+            z_beta_diff_mat = (beta_t_mean_diff - pseudo_avg.region.(reg).event.(EventType).beta_t_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).beta_t_log_diff_std;
             
             % Z-score spectrogram pseudo data (null-distribution) for the cluster correction analysis
             for i = 1:Niter
-                z_spec_diff_mat(i,:,:) = (sq(spec_mean(i,:,:)) - pseudo_avg.region.(reg).event.(EventType).spec_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).spec_log_diff_std(i,:,:);              
+                z_spec_rwd_mat(i,:,:) = (sq(spec_mean_rwd(i,:,:)) - pseudo_avg.region.(reg).event.(EventType).spec_log_rwd_avg)./pseudo_avg.region.(reg).event.(EventType).spec_log_rwd_std(i,:,:);
+                z_spec_norwd_mat(i,:,:) = (sq(spec_mean_norwd(i,:,:)) - pseudo_avg.region.(reg).event.(EventType).spec_log_norwd_avg)./pseudo_avg.region.(reg).event.(EventType).spec_log_norwd_std(i,:,:);
+                z_spec_diff_mat(i,:,:) = (sq(spec_mean_diff(i,:,:)) - pseudo_avg.region.(reg).event.(EventType).spec_log_diff_avg)./pseudo_avg.region.(reg).event.(EventType).spec_log_diff_std(i,:,:);              
             end         
             
+            % REWARD
+            % spectrogram z-scored and thresholded
+            z_spec_rwd_mat(z_spec_rwd_mat < z_th & z_spec_rwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % psd z-scored and thresholded
+            z_psd_rwd_mat(z_psd_rwd_mat < z_th & z_psd_rwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % theta band z-scored and thresholded
+            z_theta_rwd_mat(z_theta_rwd_mat < z_th & z_theta_rwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % theta band z-scored and thresholded
+            z_beta_rwd_mat(z_beta_rwd_mat < z_th & z_beta_rwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            
+            % NO-REWARD
+            % spectrogram z-scored and thresholded
+            z_spec_norwd_mat(z_spec_norwd_mat < z_th & z_spec_norwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % psd z-scored and thresholded
+            z_psd_norwd_mat(z_psd_norwd_mat < z_th & z_psd_norwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % theta band z-scored and thresholded
+            z_theta_norwd_mat(z_theta_norwd_mat < z_th & z_theta_norwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+            % theta band z-scored and thresholded
+            z_beta_norwd_mat(z_beta_norwd_mat < z_th & z_beta_norwd_mat > -z_th) = 0; % set to zero values above threshold (in abs value)
+
+            
+            % DIFFERENCE 
             % spectrogram z-scored and thresholded
             z_spec_diff_mat(z_spec_diff_mat < z_th & z_spec_diff_mat > - z_th) = 0; % set to zero values above threshold (in abs value)
             % psd z-scored and thresholded
@@ -112,17 +213,31 @@ for ID = 1:max_ID % for all the pseudo spectrograms
             
             % % COUNT MAX CLUSTERS IN THE NULL DISTRIBUTION:
             % Generate max cluster distribution by iterating through the null distribution again
-            [clust_w_psd,clust_w_spec,clust_w_theta,clust_w_beta] = max_cluster_count_null_distribution_ch(z_spec_diff_mat,z_psd_diff_mat,z_theta_diff_mat,z_beta_diff_mat,Niter);
-            
+            [clust_w_psd_rwd, clust_w_spec_rwd, clust_w_theta_rwd, clust_w_beta_rwd] = max_cluster_count_null_distribution_ch(z_spec_rwd_mat, z_psd_rwd_mat, z_theta_rwd_mat, z_beta_rwd_mat, Niter);
+            [clust_w_psd_norwd, clust_w_spec_norwd, clust_w_theta_norwd, clust_w_beta_norwd] = max_cluster_count_null_distribution_ch(z_spec_norwd_mat, z_psd_norwd_mat, z_theta_norwd_mat, z_beta_norwd_mat, Niter);
+            [clust_w_psd_diff,clust_w_spec_diff,clust_w_theta_diff,clust_w_beta_diff] = max_cluster_count_null_distribution_ch(z_spec_diff_mat,z_psd_diff_mat,z_theta_diff_mat,z_beta_diff_mat,Niter);
+
             % % SAVE RESULTS
             % save results into structure (avg and std of the null)
             
             
             % save results into structure (cluster size lists)
-            cluster.region.(reg).event.(EventType).psd_clust_list = [cluster.region.(reg).event.(EventType).psd_clust_list; clust_w_psd];
-            cluster.region.(reg).event.(EventType).spec_clust_list = [cluster.region.(reg).event.(EventType).spec_clust_list; clust_w_spec];
-            cluster.region.(reg).event.(EventType).theta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_clust_list; clust_w_theta];
-            cluster.region.(reg).event.(EventType).beta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_clust_list; clust_w_beta];
+            
+            % REWARD
+            cluster.region.(reg).event.(EventType).psd_clust_list = [cluster.region.(reg).event.(EventType).psd_rwd_clust; clust_w_psd_rwd];
+            cluster.region.(reg).event.(EventType).spec_clust_list = [cluster.region.(reg).event.(EventType).spec_rwd_clust; clust_w_spec_rwd];
+            cluster.region.(reg).event.(EventType).theta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_theta_t_clust; clust_w_theta_rwd];
+            cluster.region.(reg).event.(EventType).beta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_beta_clust; clust_w_beta_rwd];
+            % NO REWARD
+            cluster.region.(reg).event.(EventType).psd_clust_list = [cluster.region.(reg).event.(EventType).psd_norwd_clust; clust_w_psd_norwd];
+            cluster.region.(reg).event.(EventType).spec_clust_list = [cluster.region.(reg).event.(EventType).spec_norwd_clust; clust_w_spec_norwd];
+            cluster.region.(reg).event.(EventType).theta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_theta_t_clust; clust_w_theta_norwd];
+            cluster.region.(reg).event.(EventType).beta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_beta_clust; clust_w_beta_norwd];
+            % DIFFERENCE 
+            cluster.region.(reg).event.(EventType).psd_clust_list = [cluster.region.(reg).event.(EventType).psd_diff_clust; clust_w_psd_diff];
+            cluster.region.(reg).event.(EventType).spec_clust_list = [cluster.region.(reg).event.(EventType).spec_diff_clust; clust_w_spec_diff];
+            cluster.region.(reg).event.(EventType).theta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_theta_t_clust; clust_w_theta_diff];
+            cluster.region.(reg).event.(EventType).beta_t_clust_list = [cluster.region.(reg).event.(EventType).spec_beta_clust; clust_w_beta_diff];
             
         end % event loop
     end % region loop

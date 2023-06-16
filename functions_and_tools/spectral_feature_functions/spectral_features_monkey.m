@@ -50,6 +50,11 @@ for sess = sess_range
                 % Store LFP and time 
                 stats(sess).region.(area).event.(EventType).rwd(r).ch(chnl).lfp = X;
                 
+                
+                if area == "MST" % if recording in MST, it is recorded with linear probe and should be scaled up by a factor 1000 to have it in micro-Volt
+                    X = X*1e3; %
+                end
+                
                 % % PSD
                 [spec, f_psd] =  dmtspec(X',[N/sampling W],sampling,f_max,2,0.05,1);
                 stats(sess).region.(area).event.(EventType).rwd(r).ch(chnl).psd = spec;
