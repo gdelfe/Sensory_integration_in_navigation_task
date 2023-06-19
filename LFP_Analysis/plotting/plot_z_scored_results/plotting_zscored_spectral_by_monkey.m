@@ -12,10 +12,10 @@ dir_in_test = 'E:\Output\GINO\test_stats\'; % directory input for t_stats
 dir_in_zscored = 'E:\Output\GINO\zscored_stats\';
 dir_main_out = 'E:\Output\GINO\Figures\z_scored_spectral\'; % root directory for the output
 p_th = 0.05;
-iterations = 5000;
+iterations = 50;
 Events = ["target","stop"];
 
-for monkey = ["Quigley"]
+for monkey = ["Bruno"]
    
     dir_out = strcat(dir_main_out,sprintf('p_th_%.2f\\%s\\',p_th,monkey)); % create directory z_scored_spectral\p_th_XXX\monkey\
     if ~exist(dir_out, 'dir')
@@ -26,7 +26,7 @@ for monkey = ["Quigley"]
     % load test-statistics
     load(strcat(dir_in_test,sprintf('test_stats_%s.mat',monkey)));
     % load z-scored statistics
-    load(strcat(dir_in_zscored_pth,sprintf('zscored_stats_%s_p_th_%.2f_iter_%d_all_events.mat',monkey,p_th,iterations)));
+    load(strcat(dir_in_zscored_pth,sprintf('zscored_stats_%s_p_th_%.2f_iter_%d_diff_rwd_norwd.mat',monkey,p_th,iterations)));
     
     
     

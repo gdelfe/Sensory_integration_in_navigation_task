@@ -55,7 +55,7 @@ dir_out_zscore = strcat(dir_main,sprintf('zscored_stats\\p_th_%.2f\\',p_th));
 if ~exist(dir_out_zscore, 'dir')
     mkdir(dir_out_zscore)
 end
-save(strcat(dir_out_zscore,sprintf('zscored_stats_%s_p_th_%.2f_iter_%d_all_events.mat',monkey,p_th,S)),'Zscored_stats','-v7.3');
+save(strcat(dir_out_zscore,sprintf('zscored_stats_%s_p_th_%.2f_iter_%d_diff_rwd_norwd.mat',monkey,p_th,S)),'Zscored_stats','-v7.3');
 
 
 

@@ -14,7 +14,7 @@ dir_out = 'E:\Output\GINO\stats\';
 % Parameters
 % %%%%%%%%%%%%%%%%
 
-Events = ["target","move","stop"];
+Events = ["target","stop"];
 sess_range = [1,2,3];
 rwd_range = [1,2];
 

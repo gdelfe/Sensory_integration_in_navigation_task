@@ -24,6 +24,10 @@
 %         spectrogram, b. theta_band only, c. beta_band only
 %
 % @ Gino Del Ferraro, NYU, Jan 2023
+%
+% Updated: Gino Del Ferraro, NYU, June 2023: added z-score procedure not
+% only for the spectrogram difference rwd-norwd but also for the single
+% spectrogram rwd and norwd
 
 function cluster = null_stats_max_cluster_count_ch(monkey,pseudo_avg,sess_range,Events,max_ID,Niter,p_th,dir_in_null,theta_idx,beta_idx)
 
