@@ -19,7 +19,7 @@ z_th = abs(norminv((0.5*pth))); % z-score threshold for two tails test
 
 
 z_diff = Zscored_stats.region.(reg).event.(EventType).var.psd.z_log_diff;
-% z_diff_th = Zscored_stats.region.(reg).event.(EventType).var.psd.z_log_diff_th;
+z_diff_th = Zscored_stats.region.(reg).event.(EventType).var.psd.z_log_diff_th;
 z_diff_cc = Zscored_stats.region.(reg).event.(EventType).var.psd.z_log_diff_clust_corr;
 
 

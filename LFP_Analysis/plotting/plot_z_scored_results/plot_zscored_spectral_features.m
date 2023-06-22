@@ -31,16 +31,17 @@ for region = 1:length(reg_names)
     reg = reg_names{region}; % get region name
     nch = t_stats.region.(reg).Nch;
     
-    dir_out_region  = strcat(dir_out,sprintf('%s\\',reg));
-    if ~exist(dir_out_region, 'dir')
-        mkdir(dir_out_region)
-    end
-    
     for EventType = Events
         
+        dir_out_region  = strcat(dir_out,sprintf('%s\\%s\\',reg,EventType));
+        
+        
 %         plot z-scored spectrogram, psd, freq band 
-        plot_zscored_spec(Zscored_stats,reg,EventType,monkey,ts,ti,f_spec,dir_out_region,nch,pth,iterations,1)
-        plot_psd_vs_freq(Zscored_stats,reg,EventType,monkey,f,dir_out_region,nch,pth,iterations,1)
+        plot_zscored_spec(Zscored_stats,reg,EventType,monkey,'diff','z_log_diff','z_log_diff_clust',ts,ti,f_spec,id,dir_out_region,nch,pth,iterations,1)
+%         plot_zscored_spec(Zscored_stats,reg,EventType,monkey,'rwd','z_log_rwd','z_log_rwd',ts,ti,f_spec,id,dir_out_region,nch,pth,iterations,1)
+%         plot_zscored_spec(Zscored_stats,reg,EventType,monkey,'norwd','z_log_norwd','z_log_norwd',ts,ti,f_spec,id,dir_out_region,nch,pth,iterations,1)
+
+%         plot_psd_vs_freq(Zscored_stats,reg,EventType,monkey,f,dir_out_region,nch,pth,iterations,1)
         plot_freq_vs_time(Zscored_stats,reg,EventType,monkey,"theta_t",t,dir_out_region,nch,pth,iterations,1)
         plot_freq_vs_time(Zscored_stats,reg,EventType,monkey,"beta_t",t,dir_out_region,nch,pth,iterations,1)
         

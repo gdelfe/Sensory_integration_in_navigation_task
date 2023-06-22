@@ -41,8 +41,8 @@ else
     clust_th = sorted_clusters(percentile_95_idx); % cluster size/weight threshold for the t-statistics
 end
 
-Z_spec_theta_cc = z_spec_cluster_corrected(z_log_diff,clust_th); % cluster correction of the test-statistics
-Zscored_stats.region.(reg).event.(EventType).var.(quantity).z_log_diff_clust_corr = Z_spec_theta_cc; % z-scored spectrogram cluster-corrected
+Z_spec_cc = z_spec_cluster_corrected(z_log_diff,clust_th); % cluster correction of the test-statistics
+Zscored_stats.region.(reg).event.(EventType).var.(quantity).z_log_diff_clust_corr = Z_spec_cc; % z-scored spectrogram cluster-corrected
 
 
 end

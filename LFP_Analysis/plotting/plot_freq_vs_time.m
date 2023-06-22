@@ -15,6 +15,11 @@ elseif show_fig == 1
     set(0,'DefaultFigureVisible','on')
 end
 
+dir_out_score  = strcat(dir_out_region,sprintf('%s_diff\\',quantity));
+if ~exist(dir_out_score, 'dir')
+    mkdir(dir_out_score)
+end
+
 z_th = abs(norminv((0.5*pth))); % z-score threshold for two tails test
 
 z_diff = Zscored_stats.region.(reg).event.(EventType).var.(quantity).z_log_diff;
@@ -22,8 +27,8 @@ z_diff_th = Zscored_stats.region.(reg).event.(EventType).var.(quantity).z_log_di
 z_diff_cc = Zscored_stats.region.(reg).event.(EventType).var.(quantity).z_log_diff_clust_corr;
 
 fig = figure;
-plot(t,z_diff); hold on
-yline(z_th); 
+plot(t,z_diff,'LineWidth',2); hold on
+yline(z_th)
 yline(-z_th)
 
 hold on
@@ -47,7 +52,7 @@ end
 hold off
 
 
-title(sprintf("M: %s, Zdiff %s band, reg = %s, event = %s, nch = %d, pth = %.2f",monkey,quantity,reg,EventType,nch,pth),'FontSize',12)
+title(sprintf("%s, %s, %s band, %s, nch = %d, pth = %.2f",monkey,reg,upper(quantity),upper(EventType),nch,pth),'FontSize',12)
 xlabel('time (s)','FontName','Arial','FontSize',12);
 ylabel('zscored log(power) diff','FontName','Arial','FontSize',12);
 legend({'zscored diff','zscore theshold'},'FontSize',10,'FontName','Arial','Location','NorthWest')
@@ -55,7 +60,7 @@ set(gcf, 'Position',  [100, 500, 800, 500])
 % set(gca,'FontSize',14)
 grid on
 
-fname = strcat(dir_out_region,sprintf('%s_zscored_diff_%s_band_vs_time_reg_%s_event_%s_pth_%.2f_iter_%d.png',monkey,quantity,reg,EventType,pth,iterations));
+fname = strcat(dir_out_score,sprintf('%s_zscored_diff_%s_band_vs_time_reg_%s_event_%s_pth_%.2f_iter_%d.png',monkey,quantity,reg,EventType,pth,iterations));
 saveas(fig,fname)
 
 

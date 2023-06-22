@@ -20,18 +20,19 @@ for region = 1:length(reg_names)
     reg = reg_names{region};
     
     for EventType = Events
+           % NO REWARD
            Zscored_stats = zscore_and_cluster_correction_for_norwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'spec',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_norwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'psd',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_norwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'theta_t',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_norwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'beta_t',z_th);
            
-           
+           % REWARD
            Zscored_stats = zscore_and_cluster_correction_for_rwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'spec',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_rwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'psd',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_rwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'theta_t',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_rwd(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'beta_t',z_th);
            
-           
+           % DIFFERENCE 
            Zscored_stats = zscore_and_cluster_correction_for_difference(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'spec',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_difference(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'psd',z_th);
            Zscored_stats = zscore_and_cluster_correction_for_difference(t_stats,pseudo_avg,cluster,Zscored_stats,reg,EventType,'theta_t',z_th);

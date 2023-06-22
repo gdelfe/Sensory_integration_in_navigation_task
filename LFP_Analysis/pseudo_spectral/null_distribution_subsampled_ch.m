@@ -142,6 +142,7 @@ for sess = sess_range
                     
                 end % permutation loop
                 
+                % store results 
                 pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_diff_mat = log_psd_diff_mat_ch ; % null distribution for the spectrum/psd by channel
                 pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_pseudo_rwd_mat = log_psd_pseudo_rwd_ch ;
                 pseudo_stats(sess).region.(reg).event.(EventType).ch(chnl).log_psd_pseudo_norwd_mat = log_psd_pseudo_norwd_ch ;

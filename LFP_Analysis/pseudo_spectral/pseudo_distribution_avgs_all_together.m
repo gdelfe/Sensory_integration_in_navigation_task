@@ -4,7 +4,7 @@ clear all; close all;
 % %%%%%%%%%%%%%%%%
 % PATHS
 % %%%%%%%%%%%%%%%
-monkey = "Bruno";
+monkey = "Vik";
 dir_out_main = 'E:\Output\GINO\Figures\avg_results_freq_vs_time\';
 dir_in_null = 'E:\Output\GINO\pseudo_stats\server_results\rwd_no_rwd_diff_and_singles\';
 dir_out_null = 'E:\Output\GINO\pseudo_stats\';
@@ -15,9 +15,9 @@ dir_out_null = 'E:\Output\GINO\pseudo_stats\';
 % %%%%%%%%%%%%%%%%
 
 sess_range = [1,2,3];
-Events = ["target"];
+Events = ["target","stop"];
 iter = 5;
-max_ID =  10;
+max_ID =  1000;
 nsess = length(sess_range);
 S = iter*nsess*max_ID;
 theta_band = [3.9,10];
@@ -61,7 +61,7 @@ for animal = monkey
     step = 0;
     for ID = 1:max_ID
         display(['Monkey ',num2str(animal),' - ID ',num2str(ID)])
-        load(strcat(dir_in_null,sprintf('%s\\pseudo_stats_%s_iter_%d_ID_%d_diff_rwd_norwd.mat',animal,animal,iter,ID)));
+        load(strcat(dir_in_null,sprintf('%s\\pseudo_stats_%s_iter_%d_ID_%d_diff_rwd_norwd.mat',animal,animal,iter,ID))); % pseudo_stats
         
         reg_names = fieldnames(pseudo_stats(1).region); % brain regions name
         
@@ -71,16 +71,19 @@ for animal = monkey
                 
                 nch = length(pseudo_stats(1).region.(reg).event.(EventType).ch);
                 
+                % reward
                 psd_rwd = zeros(nch*nsess,iter,length(psd_f));
                 spec_rwd = zeros(nch*nsess,iter,length(t_spec),length(fs));
                 theta_tf_rwd = zeros(nch*nsess,iter,length(t_spec),length(theta_idx));
                 beta_tf_rwd = zeros(nch*nsess,iter,length(t_spec),length(beta_idx));
                 
+                % no reward
                 psd_norwd = zeros(nch*nsess,iter,length(psd_f));
                 spec_norwd = zeros(nch*nsess,iter,length(t_spec),length(fs));
                 theta_tf_norwd = zeros(nch*nsess,iter,length(t_spec),length(theta_idx));
                 beta_tf_norwd = zeros(nch*nsess,iter,length(t_spec),length(beta_idx));
                 
+                % difference 
                 psd_diff = zeros(nch*nsess,iter,length(psd_f));
                 spec_diff = zeros(nch*nsess,iter,length(t_spec),length(fs));
                 theta_tf_diff = zeros(nch*nsess,iter,length(t_spec),length(theta_idx));

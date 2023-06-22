@@ -40,14 +40,14 @@ for region = 1:length(reg_names)
             
             for sess = 1:3
                 for chnl = 1:nch
-                    theta_tf = [theta_tf, mean(log(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),2)]; % mean across theta band
-                    theta_tf_var = [theta_tf_var, var(log(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),[],2)]; % variance
-                    beta_tf = [beta_tf, mean(log(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,beta_idx)),2)]; % mean across beta band
-                    beta_tf_var = [beta_tf_var, var(log(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,beta_idx)),[],2)]; % variance
+                    theta_tf = [theta_tf, mean(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),2)]; % mean across theta band
+                    theta_tf_var = [theta_tf_var, var(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),[],2)]; % variance
+                    beta_tf = [beta_tf, mean(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,beta_idx)),2)]; % mean across beta band
+                    beta_tf_var = [beta_tf_var, var(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,beta_idx)),[],2)]; % variance
                     
                     spec = cat(3,spec,stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec); % concatenate spectrogram in 3D
                     
-                    log_psd = [log_psd; log(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).psd)];
+                    log_psd = [log_psd; log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).psd)];
                 end
             end % sess loop
             
@@ -59,8 +59,8 @@ for region = 1:length(reg_names)
             t_stats.region.(reg).event.(EventType).rwd(r).avg_beta_t = mean((beta_tf),2)'; % mean across channel and sessions
             t_stats.region.(reg).event.(EventType).rwd(r).err_beta_t = (sqrt(mean((beta_tf_var),2))/sqrt(nch*Nbeta*Nsess))'; % SEM across channels and theta band
             % spectrogram
-            t_stats.region.(reg).event.(EventType).rwd(r).avg_spec = mean(log(spec),3); % mean across channel and sessions
-            t_stats.region.(reg).event.(EventType).rwd(r).err_spec = std(log(spec),[],3)/sqrt(nch*Nsess);
+            t_stats.region.(reg).event.(EventType).rwd(r).avg_spec = mean(log10(spec),3); % mean across channel and sessions
+            t_stats.region.(reg).event.(EventType).rwd(r).err_spec = std(log10(spec),[],3)/sqrt(nch*Nsess);
             
             % PSD 
             t_stats.region.(reg).event.(EventType).rwd(r).avg_psd = mean(log_psd); % mean across channel and sessions
