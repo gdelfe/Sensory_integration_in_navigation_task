@@ -16,9 +16,12 @@ function t_stats = average_stats(stats,Events,theta_band,beta_band)
 
 
 fs = stats(1).prs.f_spec; % spectrogram frequency
+% frequency ranges in Hz
+theta = [3.9,10];
+beta = [15,30];
+
 theta_idx = find(fs >= theta_band(1) & fs < theta_band(2)); % theta-range index
 beta_idx = find(fs >= beta_band(1) & fs < beta_band(2)); % beta-range index
-
 
 Nsess = 3; % number of sessions
 Ntheta = length(theta_idx); % how many frequency values in theta frequency band

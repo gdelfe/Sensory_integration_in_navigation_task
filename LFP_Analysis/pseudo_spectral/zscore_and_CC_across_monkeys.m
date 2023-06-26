@@ -23,33 +23,17 @@ load(strcat(dir_in_null,sprintf('pseudo_avg_%s_tot_iter_%d_diff_rwd_norwd.mat',"
 
 % create structure to stack t-stats and pseudo-stats results across monkeys
 t_stats_all = create_t_stats_all(Events);
-pseudo_avg_all = create_pseudo_stats_all(pseudo_avg,Events);
+pseudo_all = create_pseudo_stats_all(pseudo_avg,Events);
 
 % Concatenate results across monkeys for t-statistics and pseudo-statistics
-t_stats_all = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test);
-pseudo_avg_all = concatenate_pseudo_stats(pseudo_avg_all,monkeys,Events,S,dir_in_null);
+[t_stats_all,f] = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test);
+pseudo_all = concatenate_pseudo_stats(pseudo_all,monkeys,Events,S,dir_in_null);
 
 
+t_stat_avg = compute_t_stat_avg(t_stats_all,Events);
 
-for monkey = monkeys
-        
-    reg_names = {'PPC','PFC','MST'};
-    
-    reg_all = {};
-    for region = 1:length(reg_names)
-        reg = reg_names{region}; % get region name
-        
-        for EventType = Events
-            
-            var_names = fieldnames(t_stats_all.region.(reg).event.(EventType).rwd(1));
-            for variable = 1:length(var_names)
-                
-                var = var_names{variable}; % get spectral variable name
-                t_stat_avg.region.(reg).event.(EventType).(var) = sq(mean(t_stats_all.region.(reg).event.(EventType).rwd(1).(var),3)) - sq(mean(t_stats_all.region.(reg).event.(EventType).rwd(2).(var),3));
-            end
-        end
-    end
-end
+pseudo_avg = compute_pseudo_avg(pseudo_all);
+
 
 
 

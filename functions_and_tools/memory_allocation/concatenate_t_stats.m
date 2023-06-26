@@ -2,7 +2,7 @@
 
 % Concatenate results across monkeys for t-statistics 
 
-function t_stats_all = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test)
+function [t_stats_all,f] = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test)
 
 for monkey = monkeys
     
@@ -25,4 +25,5 @@ for monkey = monkeys
             end
         end
     end
+    f = t_stats.f_psd;
 end
