@@ -8,7 +8,6 @@ err_names = ["spec_log_diff_std"];
 
 reg_names = {'PPC','PFC','MST'};
 
-
 reg_all = {};
 for region = 1:length(reg_names)
     reg = reg_names{region}; % get region name
@@ -17,13 +16,14 @@ for region = 1:length(reg_names)
             for variable = 1:length(var_names)
                 var = var_names{variable}; % get spectral variable name
                 err = err_names{variable}; % get error name
-                % compute means
-                pseudo_all.region.(reg).event.(EventType).(var) = sq(mean(t_stats_all.region.(reg).event.(EventType).rwd(r).(var),3));
-                Nm = size(t_stats_all.region.(reg).event.(EventType).rwd(r).(var),3); % Number of monkeys
                 
-                % compute variance, std, sem throughout error propagation
-                variance = sum(t_stats_all.region.(reg).event.(EventType).rwd(r).(err),3)/(Nm^2);
-                t_stat_avg.region.(reg).event.(EventType).rwd(r).(err) = sqrt(variance);
+                % compute means
+                pseudo_mu = sq(mean(pseudo_all.region.(reg).event.(EventType).(var),3));
+                pseudo_avg.region.(reg).event.(EventType).(var) = pseudo_mu;
+                
+                % compute variance, v = 1/3 * (v1 + v2 + v3) + 1/3 * [(µ1-µ)^2 + (µ2-µ)^2 + (µ3-µ)^2]
+                variance = mean(pseudo_all.region.(reg).event.(EventType).(err),3) + mean( (pseudo_all.region.(reg).event.(EventType).(var) - pseudo_mu).^2 ,3)  ;
+                pseudo_avg.region.(reg).event.(EventType).(err) = sqrt(variance);
                 
             end
             

@@ -5,7 +5,7 @@ clear all; close all;
 % PARAMETERS
 % %%%%%%%%%%%%%%
 
-monkeys = ["Bruno","Quigley","Schro","Vik"]
+monkeys = ["Bruno","Quigley","Schro","Vik"];
 
 p_th = 0.05; % p-value threshold
 iter = 5 ;
@@ -29,11 +29,21 @@ pseudo_all = create_pseudo_stats_all(pseudo_avg,Events);
 [t_stats_all,f] = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test);
 pseudo_all = concatenate_pseudo_stats(pseudo_all,monkeys,Events,S,dir_in_null);
 
-
+% compute t-stat and pseudo-stat average and std 
 t_stat_avg = compute_t_stat_avg(t_stats_all,Events);
+pseudo_avg = compute_pseudo_avg(pseudo_all,Events);
 
-pseudo_avg = compute_pseudo_avg(pseudo_all);
 
+Zscored_stats = zscore_for_difference_across_monkeys(t_stat_avg,pseudo_avg,Events,'spec',p_th)
+
+EventType = 'target';
+reg = 'PPC';
+spec = t_stat_avg.region.(reg).event.(EventType).rwd(1).avg_spec - t_stat_avg.region.(reg).event.(EventType).rwd(2).avg_spec;
+
+figure;
+tvimage(spec)
+colorbar 
+ylim([0 100])
 
 
 
