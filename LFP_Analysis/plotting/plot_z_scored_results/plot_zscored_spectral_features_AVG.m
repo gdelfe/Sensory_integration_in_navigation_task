@@ -5,7 +5,7 @@
 % for reward = 0/1
 % OUTPUT: files 
 
-function plot_zscored_spectral_features_AVG(Zscored_stats,t_stats,Events,monkey,pth,iterations,show_fig,dir_out)
+function plot_zscored_spectral_features_AVG(Zscored_stats,t_stats,Events,pth,show_fig,dir_out)
 
 % show figures or not 
 if show_fig == 0
@@ -23,13 +23,12 @@ f_spec = t_stats.f_spec;
 [m, id] = min(abs(f_spec-50)); % find the index of max f_spec at 50 Hz
 f_spec = f_spec(1:id); % get frequency from 0 to 50 Hz
 % region names
-reg_names = fieldnames(t_stats(1).region);
+reg_names = {'PPC','PFC','MST'};
 t = ts(round(ti));
 
 
 for region = 1:length(reg_names)
     reg = reg_names{region}; % get region name
-    nch = t_stats.region.(reg).Nch;
     
     for EventType = Events
         
@@ -37,7 +36,7 @@ for region = 1:length(reg_names)
         
         
 %         plot z-scored spectrogram, psd, freq band 
-        plot_zscored_spec(Zscored_stats,reg,EventType,monkey,'diff','z_log_diff','z_log_diff_clust',ts,ti,f_spec,id,dir_out_region,nch,pth,iterations,1)
+        plot_zscored_spec_AVG(Zscored_stats,reg,EventType,'diff','z_log_diff','z_log_diff_clust',ts,ti,f_spec,id,dir_out_region,pth,1)
 
      
     end

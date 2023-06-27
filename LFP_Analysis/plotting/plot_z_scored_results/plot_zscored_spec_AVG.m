@@ -1,10 +1,9 @@
 % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This function plots the zscored spectrogram, normal, thresholded, and
-% cluster corrected
+% This function plots the zscored spectrogram, normal, thresholded average
 %
-% @ Gino Del Ferraro, NYU, Jan 2023
+% @ Gino Del Ferraro, NYU, June 2023
 
-function plot_zscored_spec(Zscored_stats,reg,EventType,monkey,name,quantity,quantity_cc,ts,ti,f_spec,y_max,dir_out_region,nch,pth,show_fig)
+function plot_zscored_spec_AVG(Zscored_stats,reg,EventType,name,quantity,quantity_cc,ts,ti,f_spec,y_max,dir_out_region,pth,show_fig)
 % show figures or not
 if show_fig == 0
     set(0,'DefaultFigureVisible','off')
@@ -22,22 +21,22 @@ type{3} = 'CC';
 
 Z(1).data = Zscored_stats.region.(reg).event.(EventType).var.spec.(quantity);
 Z(2).data = Zscored_stats.region.(reg).event.(EventType).var.spec.(quantity_th);
-Z(3).data = Zscored_stats.region.(reg).event.(EventType).var.spec.(quantity_cc);
+% Z(3).data = Zscored_stats.region.(reg).event.(EventType).var.spec.(quantity_cc);
 
 Z(1).names = ['Zscored ', name]; % log difference spectrogram (rwd 0/1) zscored
 Z(2).names = ['Zscored ',name,' th']; % log difference spectrogram (rwd 0/1) zscored thresholded
-Z(3).names = ['Zscored ',name,' CC']; % log difference spectrogram (rwd 0/1) zscored cluster corrected
+% Z(3).names = ['Zscored ',name,' CC']; % log difference spectrogram (rwd 0/1) zscored cluster corrected
 
 Z(1).n_file = 'zscored'; % file names for figure
 Z(2).n_file = 'zscored_th'; %
-Z(3).n_file = 'Zscored_cc'; %
+% Z(3).n_file = 'Zscored_cc'; %
 
 dir_out_score  = strcat(dir_out_region,sprintf('Spec_%s\\',Z(1).names));
 if ~exist(dir_out_score, 'dir')
     mkdir(dir_out_score)
 end
 
-for i = 1:3
+for i = 1:2
     
     p = 0.025;  % In a two-tailed test, a p-value of 0.05 corresponds to 0.025 in each tail
     z_th = norminv(1-p);  % Computes the z-score
@@ -64,7 +63,7 @@ for i = 1:3
     colorbar;
     
     grid on
-    title(sprintf('%s, %s, %s, %s, nch: %d, pth = %.2f',monkey,reg,upper(EventType),Z(i).names,nch,pth),'FontSize',10);
+    title(sprintf('Average %s, %s, %s, pth = %.2f',reg,upper(EventType),Z(i).names,pth),'FontSize',10);
     
     [x_idx, xlbl, y_idx, ylbl] = tfspec_labels(ts,ti,f_spec,0.25,10);
     
@@ -112,7 +111,7 @@ for i = 1:3
     %     ylim([0 y_max])
     
     
-    fname = strcat(dir_out_score,sprintf('%s_spec_%s_%s_%s_%s_%s_pth_%.2f.png',monkey,type{i},name,Z(i).n_file,reg,EventType,pth));
+    fname = strcat(dir_out_score,sprintf('Average_spec_%s_%s_%s_%s_%s_pth_%.2f.png',type{i},name,Z(i).n_file,reg,EventType,pth));
     saveas(fig,fname)
     
 end
