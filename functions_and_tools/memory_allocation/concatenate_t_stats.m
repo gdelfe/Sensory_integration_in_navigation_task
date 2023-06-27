@@ -1,16 +1,15 @@
 
 
-% Concatenate results across monkeys for t-statistics 
+% Concatenate results across monkeys for t-statistics
 
 function [t_stats_all] = concatenate_t_stats(t_stats_all,monkeys,Events,dir_in_test)
 
 for monkey = monkeys
     
-    load(strcat(dir_in_test,sprintf('test_stats_%s_all_events.mat',monkey))); % test-statistics, t_stats
+    load(strcat(dir_in_test,sprintf('test_stats_%s_all_events.mat',monkey))); % t_stats, test-statistics
     
     reg_names = fieldnames(t_stats(1).region);
     
-    reg_all = {};
     for region = 1:length(reg_names)
         reg = reg_names{region}; % get region name
         

@@ -2,7 +2,7 @@
 
 % Concatenate results across monkeys for t-statistics 
 
-function pseudo_avg_all = concatenate_pseudo_stats(pseudo_avg_all,monkeys,Events,S,dir_in_null)
+function pseudo_all = concatenate_pseudo_stats(pseudo_all,monkeys,Events,S,dir_in_null)
 
 for monkey = monkeys
     
@@ -18,7 +18,7 @@ for monkey = monkeys
                 var_names = fieldnames(pseudo_avg.region.(reg).event.(EventType));
                 for variable = 1:length(var_names)
                     var = var_names{variable}; % get spectral variable name
-                    pseudo_avg_all.region.(reg).event.(EventType).(var)  = cat(3,pseudo_avg_all.region.(reg).event.(EventType).(var), pseudo_avg.region.(reg).event.(EventType).(var));
+                    pseudo_all.region.(reg).event.(EventType).(var)  = cat(3,pseudo_all.region.(reg).event.(EventType).(var), pseudo_avg.region.(reg).event.(EventType).(var));
                 end
         end
     end
