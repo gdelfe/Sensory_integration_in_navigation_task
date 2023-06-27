@@ -49,5 +49,13 @@ for monkey = monkeys
                 end
             end
         end
+        t_stats_all.region.(reg).Nch = nch;
     end
+    
+    
+    t_stats_all.ti =  t_stats.ti;
+    t_stats_all.ts =  t_stats.ts;
+    t_stats_all.f_psd =  t_stats.f_psd;
+    t_stats_all.f_spec =  t_stats.f_spec;
+    
 end

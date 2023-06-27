@@ -32,13 +32,13 @@ pseudo_all = create_pseudo_stats_all(pseudo_avg,Events);
 pseudo_all = concatenate_pseudo_stats(pseudo_all,monkeys,Events,S,dir_in_null);
 
 % compute t-stat and pseudo-stat average and std 
-t_stat_avg = compute_t_stat_avg(t_stats_all,Events); % % % % The error calculation should be modified. For beta/theta vs time --- modify it above in concatenate_t_stats
+t_stats_avg = compute_t_stat_avg(t_stats_all,Events); % % % % The error calculation should be modified. For beta/theta vs time --- modify it above in concatenate_t_stats
 pseudo_avg = compute_pseudo_avg(pseudo_all,Events);
 
 
-Zscored_stats = zscore_for_difference_across_monkeys(t_stat_avg,pseudo_avg,Events,'spec',p_th);
+Zscored_stats = zscore_for_difference_across_monkeys(t_stats_avg,pseudo_avg,Events,'spec',p_th);
 save(strcat(dir_out_z_score,sprintf('zscored_AVERAGE_stats_p_th_%.2f_diff_rwd_norwd.mat',p_th)),'Zscored_stats','-v7.3');
-save(strcat(dir_out_test,'\test_AVERAGE_stats_diff_rwd_norwd.mat'),'t_stat_avg','-v7.3');
+save(strcat(dir_out_test,'\test_AVERAGE_stats_diff_rwd_norwd.mat'),'t_stats_avg','-v7.3');
 
 
 

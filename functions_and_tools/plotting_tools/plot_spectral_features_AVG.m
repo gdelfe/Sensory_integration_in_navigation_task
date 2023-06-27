@@ -5,7 +5,7 @@
 % for reward = 0/1
 % OUTPUT: files 
 
-function plot_spectral_features(t_stats,Events,monkey,show_fig,dir_main)
+function plot_spectral_features_AVG(t_stats,Events,show_fig,dir_main)
 
 % show figures or not 
 if show_fig == 0
@@ -21,7 +21,7 @@ f = t_stats.f_psd; % psd frequency
 ti = t_stats.ti;
 f_spec = t_stats.f_spec;
 % region names
-reg_names = fieldnames(t_stats(1).region);
+reg_names = ["PPC","PFC","MST"];
 
 for region = 1:length(reg_names)
     reg = reg_names{region}; % get region name
@@ -65,7 +65,7 @@ for region = 1:length(reg_names)
         shadedErrorBar(tsi,rwd1_theta_t,rwd1_err_theta,'lineprops',{'color',"#009900"},'patchSaturation',0.5); hold on % incorrect trials
         shadedErrorBar(tsi,rwd2_theta_t,rwd2_err_theta,'lineprops',{'color',"#00ff00"  },'patchSaturation',0.5); hold on % correct trials
         
-        title(sprintf("%s, %s, theta band, %s, nch = %d",monkey,reg,upper(EventType),nch),'FontSize',12)
+        title(sprintf("Theta average, %s, %s",reg,upper(EventType)),'FontSize',12)
         xlabel('time (s)','FontName','Arial','FontSize',15);
         ylabel('log(power)','FontName','Arial','FontSize',15);
         set(gcf, 'Position',  [100, 500, 700, 500])
@@ -78,7 +78,7 @@ for region = 1:length(reg_names)
         hold off 
         legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
 
-        fname = strcat(dir_out_region,sprintf('%s_THETA_power_vs_time_reg_%s_event_%s.png',monkey,reg,EventType));
+        fname = strcat(dir_out_region,sprintf('Average_THETA_power_vs_time_reg_%s_event_%s.png',reg,EventType));
         saveas(fig,fname)
         
         
@@ -87,7 +87,7 @@ for region = 1:length(reg_names)
         shadedErrorBar(tsi,rwd1_beta_t,rwd1_err_beta,'lineprops',{'color',"#993d00"},'patchSaturation',0.5); hold on % incorrect trials
         shadedErrorBar(tsi,rwd2_beta_t,rwd2_err_beta,'lineprops',{'color',"#ff944d"  },'patchSaturation',0.5); hold on % correct trials
         
-        title(sprintf("%s, %s, beta band, %s, nch = %d",monkey,reg,upper(EventType),nch),'FontSize',12)
+        title(sprintf("Beta average, %s, %s",reg,upper(EventType)),'FontSize',12)
         xlabel('time (s)','FontName','Arial','FontSize',15);
         ylabel('log(power)','FontName','Arial','FontSize',15);
         set(gcf, 'Position',  [100, 500, 700, 500])
@@ -100,7 +100,7 @@ for region = 1:length(reg_names)
         hold off 
         legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
         
-        fname = strcat(dir_out_region,sprintf('%s_BETA_power_vs_time_reg_%s_event_%s.png',monkey,reg,EventType));
+        fname = strcat(dir_out_region,sprintf('Average_BETA_power_vs_time_reg_%s_event_%s.png',reg,EventType));
         saveas(fig,fname)
         
         
@@ -111,7 +111,7 @@ for region = 1:length(reg_names)
         shadedErrorBar(tsi,rwd1_beta_t,rwd1_err_beta,'lineprops',{'color',"#993d00"},'patchSaturation',0.5); hold on % incorrect trials
         shadedErrorBar(tsi,rwd2_beta_t,rwd2_err_beta,'lineprops',{'color',"#ff944d"  },'patchSaturation',0.5); hold on % correct trials
         
-        title(sprintf("%s, %s, theta/beta band, %s, nch = %d",monkey,reg,upper(EventType),nch),'FontSize',12)
+        title(sprintf("Theta/Beta average, %s, %s",reg,upper(EventType)),'FontSize',12)
         xlabel('time (s)','FontName','Arial','FontSize',15);
         ylabel('log(power)','FontName','Arial','FontSize',15);
         set(gcf, 'Position',  [100, 500, 700, 500])
@@ -124,7 +124,7 @@ for region = 1:length(reg_names)
         hold off 
         legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
         
-        fname = strcat(dir_out_region,sprintf('%s_THETA_BETA_power_vs_time_reg_%s_event_%s.png',monkey,reg,EventType));
+        fname = strcat(dir_out_region,sprintf('Average_THETA_BETA_power_vs_time_reg_%s_event_%s.png',reg,EventType));
         saveas(fig,fname)
         
         
@@ -132,14 +132,14 @@ for region = 1:length(reg_names)
         fig = figure;
         shadedErrorBar(f,rwd1_psd,rwd1_err_psd,'lineprops',{'color',"#ff6600"},'patchSaturation',0.5); hold on % incorrect trials
         shadedErrorBar(f,rwd2_psd,rwd2_err_psd,'lineprops',{'color',"#00cc66"  },'patchSaturation',0.5); % correct trials
-        title(sprintf("%s, %s, PSD, %s, nch = %d",monkey,reg,upper(EventType),nch),'FontSize',12)
+        title(sprintf("Average PSD, %s, %s",reg,upper(EventType)),'FontSize',12)
         xlabel('frequency (Hz)','FontName','Arial','FontSize',15);
         ylabel('log(psd)','FontName','Arial','FontSize',15);
         legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
         set(gcf, 'Position',  [100, 500, 700, 500])
         grid on
         xlim([0 30])
-        fname = strcat(dir_out_region,sprintf('%s_PSD_reg_%s_event_%s.png',monkey,reg,EventType));
+        fname = strcat(dir_out_region,sprintf('Average_PSD_reg_%s_event_%s.png',reg,EventType));
         saveas(fig,fname)
         
 %         % % SPECTROGRAM DIFFERENCE

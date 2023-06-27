@@ -15,7 +15,7 @@ for monkey = ["Bruno","Quigley","Schro","Vik"]
     % load test-statistics
     load(strcat(dir_in,sprintf('test_stats_%s_all_events.mat',monkey)),'t_stats');
     % plot and save figures
-    plot_spectral_features(t_stats,Events,monkey,show_fig,dir_main)
+    plot_spectral_features_v2(t_stats,Events,monkey,show_fig,dir_main)
     clear t_stats
 
 end 
