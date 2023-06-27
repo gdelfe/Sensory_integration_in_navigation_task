@@ -1,5 +1,7 @@
 
 % Compute avg and std for t_stats across monkey
+%
+% @ Gino Del Ferraro, June 2023, NYU
 
 function t_stat_avg = compute_t_stat_avg(t_stats_all,Events)
 
@@ -18,11 +20,12 @@ for region = 1:length(reg_names)
                 err = err_names{variable}; % get error variable name
                 
                 % compute means
-                t_stat_avg.region.(reg).event.(EventType).rwd(r).(var) = sq(mean(t_stats_all.region.(reg).event.(EventType).rwd(r).(var),3));
-                Nm = size(t_stats_all.region.(reg).event.(EventType).rwd(r).(var),3); % Number of monkeys
+                mu = sq(mean(t_stats_all.region.(reg).event.(EventType).rwd(r).(var),3));
+                t_stat_avg.region.(reg).event.(EventType).rwd(r).(var) = mu;
                 
                 % compute variance, std, sem throughout error propagation
-                variance = sum(t_stats_all.region.(reg).event.(EventType).rwd(r).(err),3)/(Nm^2);
+                % σ² = [ (σ1² + (μ1 - μ)²) + (σ2² + (μ2 - μ)²) + (σ3² + (μ3 - μ)²) ] / 3
+                variance = mean(t_stats_all.region.(reg).event.(EventType).rwd(r).(err).^2,3) + mean( (t_stats_all.region.(reg).event.(EventType).rwd(r).(var) - mu).^2,3) ;
                 t_stat_avg.region.(reg).event.(EventType).rwd(r).(err) = sqrt(variance);
                 
             end
