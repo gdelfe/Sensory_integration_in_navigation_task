@@ -14,7 +14,7 @@ reg_names = fieldnames(stats(1).region); % list of recorded brain regions (same 
 
 for region = 1:length(reg_names)
     reg = reg_names{region}; % get region name
-    nch = length(stats(1).region.(reg).event.target.rwd(1).ch); % number of channels (same for reward = 0/1, event = target/move)
+    nch = length(stats(1).region.(reg).event.reward.rwd(1).ch); % number of channels (same for reward = 0/1, event = target/move)
     for EventType = Events
         for r = 1:2
             for chnl = nch:-1:1

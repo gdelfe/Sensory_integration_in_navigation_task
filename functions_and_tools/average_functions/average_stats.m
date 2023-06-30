@@ -41,7 +41,7 @@ for region = 1:length(reg_names)
             theta_tf_var = []; beta_tf_var = [];
             spec = []; log_psd = [];
             
-            for sess = 1:3
+            for sess = 1:3            
                 for chnl = 1:nch
                     theta_tf = [theta_tf, mean(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),2)]; % mean across theta band
                     theta_tf_var = [theta_tf_var, var(log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).tf_spec(:,theta_idx)),[],2)]; % variance
@@ -52,6 +52,7 @@ for region = 1:length(reg_names)
                     
                     log_psd = [log_psd; log10(stats(sess).region.(reg).event.(EventType).rwd(r).ch(chnl).psd)];
                 end
+                
             end % sess loop
             
             % POWER vs TIME

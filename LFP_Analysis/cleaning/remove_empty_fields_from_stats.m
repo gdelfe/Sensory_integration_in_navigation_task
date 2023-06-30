@@ -10,12 +10,12 @@ clear all; close all;
 % PATHS
 dir_in = 'E:\Output\GINO\stats\';
 % % PARAMETERS
-Events = ["target","stop"];
+Events = ["reward"];
 
-for monkey = ["Schro"]
+for monkey = ["Bruno"]
     display([monkey])
-    load(strcat(dir_in,sprintf('stats_%s_all_events.mat',monkey)));
+    load(strcat(dir_in,sprintf('stats_%s_reward.mat',monkey)));
     % remove empty fields from the structure stats
     stats = remove_empty_fields(stats,Events)
-    save(strcat(dir_in,sprintf('stats_%s_all_events.mat',monkey)),'stats','-v7.3');
+    save(strcat(dir_in,sprintf('stats_%s_reward.mat',monkey)),'stats','-v7.3');
 end

@@ -1,11 +1,11 @@
-clear all; close all;
+% clear all; close all;
 % clearvars -except experiments
 
 % %%%%%%%%%%%%%%%%
 % PATHS
 % %%%%%%%%%%%%%%%
 monkey = "Vik";
-load('E:\Output\GINO\experiments_lfp_Vik_1_2_4_behv_lfps_cleaned.mat')
+% load('E:\Output\GINO\experiments_lfp_Vik_1_2_4_behv_lfps_cleaned.mat')
 % load('E:\Output\GINO\stats\stats_Vik_v2.mat')
 dir_out = 'E:\Output\GINO\stats\';
 
@@ -13,9 +13,9 @@ dir_out = 'E:\Output\GINO\stats\';
 % Parameters
 % %%%%%%%%%%%%%%%%
 
-Events = ["target","move","stop"];
+Events = ["reward"];
 sess_range = [1,2,3];
-rwd_range = [1,2];
+rwd_range = [2];
 
 % PSD
 W = 3; % frequency resolution (Hz)
@@ -59,7 +59,7 @@ stats = spectral_features_monkey(experiments,Events,sess_range,rwd_range,ts_star
 % stats_rwd = spectral_features_monkey(experiments,["reward"],[1,2,3],2,ts_start,ts_stop,W,f_max,Nt,Wt,dnt);
 
 
-save(strcat(dir_out,sprintf('stats_%s_all_events.mat',monkey)),'stats','-v7.3');
+save(strcat(dir_out,sprintf('stats_%s_reward.mat',monkey)),'stats','-v7.3');
 
 % save(strcat(dir_out,sprintf('stats_stop_%s.mat',monkey)),'stats_stop','-v7.3');
 % save(strcat(dir_out,sprintf('stats_rwd_%s.mat',monkey)),'stats_rwd','-v7.3');
