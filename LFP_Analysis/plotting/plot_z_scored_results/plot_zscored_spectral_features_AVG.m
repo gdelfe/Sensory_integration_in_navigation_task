@@ -35,7 +35,7 @@ for region = 1:length(reg_names)
         dir_out_region  = strcat(dir_out,sprintf('%s\\%s\\',reg,EventType));
         
         
-%         plot z-scored spectrogram, psd, freq band 
+%         plot z-scored spectrogram
         plot_zscored_spec_AVG(Zscored_stats,reg,EventType,'diff','z_log_diff','z_log_diff_clust',ts,ti,f_spec,id,dir_out_region,pth,1)
 
      
