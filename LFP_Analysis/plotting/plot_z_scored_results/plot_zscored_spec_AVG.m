@@ -111,7 +111,7 @@ for i = 1:2
     %     ylim([0 y_max])
     
     
-    fname = strcat(dir_out_score,sprintf('Average_spec_%s_%s_%s_%s_%s_pth_%.2f.png',type{i},name,Z(i).n_file,reg,EventType,pth));
+    fname = strcat(dir_out_score,sprintf('Average_spec_%s_%s_%s_%s_%s_pth_%.2f.pdf',type{i},name,Z(i).n_file,reg,EventType,pth));
     saveas(fig,fname)
     
 end
