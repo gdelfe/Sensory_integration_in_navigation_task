@@ -1,5 +1,9 @@
-% clear all; close all;
-clearvars -except experiments
+addpath(genpath('C:\Users\gd2112\Documents\Navigation_task'))
+addpath(genpath('C:\Users\gd2112\Documents\MATLAB'))
+addpath(genpath('C:\Users\gd2112\Documents\LFP_firefly'))
+
+clear all; close all;
+% clearvars -except experiments
 
 % %%%%%%%%%%%%%%%%
 % PATHS

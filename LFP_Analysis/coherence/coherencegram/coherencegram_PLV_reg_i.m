@@ -20,7 +20,7 @@ function [] = coherencegram_PLV_reg_i(monkey,sess,EventType,reg_i)
 addpath(genpath('C:\Users\gd2112\Documents\Navigation_task'))
 
 if nargin ~= 4
-    fprintf('Error. Input parameters are:  monkey, sess, EventType, region_i, region_j')
+    fprintf('Error. Input parameters are:  monkey, sess, EventType, region_i')
     return;
 end 
 

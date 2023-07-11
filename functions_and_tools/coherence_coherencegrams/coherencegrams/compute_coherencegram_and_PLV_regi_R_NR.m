@@ -1,8 +1,10 @@
-% Compute coherencegram for all channel pairs across region i and j, average the
-% results across the region and store abs and phase of the coherencegram in
-% a structure for further analysis 
+% Compute coherencegram, phase-locking-value, and instantaneous phase
+% difference for all channel pairs across region i and j, average the
+% results across the region and store coherence abs and phase of the coherencegram in
+% a structure for further analysis.
+% Store PLV and phase difference in another structure for further analysis.
 %
-% Gino Del Ferraro, NYU, April 2023
+% Gino Del Ferraro, NYU, May 2023
 
 function [coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats_den,sess,EventType,reg_i,fk,tapers,dn)
                                                                                

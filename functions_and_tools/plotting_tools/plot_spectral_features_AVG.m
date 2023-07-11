@@ -85,15 +85,15 @@ for region = 1:length(reg_names)
 %         
         % % BETA POWER
         fig = figure;
-        shadedErrorBar(tsi,rwd1_beta_t,rwd1_err_beta,'lineprops',{'color',"#993d00"},'patchSaturation',0.5); hold on % incorrect trials
-        shadedErrorBar(tsi,rwd2_beta_t,rwd2_err_beta,'lineprops',{'color',"#ff944d"  },'patchSaturation',0.5); hold on % correct trials
+        shadedErrorBar(tsi,10*rwd1_beta_t,10*rwd1_err_beta,'lineprops',{'color',"#ff0000"},'patchSaturation',0.5); hold on % incorrect trials
+        shadedErrorBar(tsi,10*rwd2_beta_t,10*rwd2_err_beta,'lineprops',{'color',"#33cc33"  },'patchSaturation',0.5); hold on % correct trials
         
         title(sprintf("Beta average, %s, %s",reg,upper(EventType)),'FontSize',12)
         xlabel('time (s)','FontName','Arial','FontSize',15);
         ylabel('log(power)','FontName','Arial','FontSize',15);
         set(gcf, 'Position',  [100, 500, 700, 500])
         % set(gca,'FontSize',14)
-        grid on
+%         grid on
         xline(0,'k--')
         if EventType == 'target'
             xline(-0.3,'r--')
@@ -101,7 +101,30 @@ for region = 1:length(reg_names)
         hold off 
         legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
         
-        fname = strcat(dir_out_region,sprintf('Average_BETA_power_vs_time_reg_%s_event_%s.png',reg,EventType));
+        fname = strcat(dir_out_region,sprintf('Average_BETA_power_vs_time_reg_%s_event_%s.pdf',reg,EventType));
+        saveas(fig,fname)
+        
+        
+        
+        % % BETA POWER
+        fig = figure;
+        shadedErrorBar(tsi,10*(rwd1_beta_t - rwd2_beta_t) ,sqrt(100*(rwd1_err_beta.^2 + rwd2_err_beta.^2)),'lineprops',{'color',"#000000"},'patchSaturation',0.5); hold on % incorrect trials
+        
+        title(sprintf("Beta average, %s, %s",reg,upper(EventType)),'FontSize',12)
+        xlabel('time (s)','FontName','Arial','FontSize',15);
+        ylabel('log(power)','FontName','Arial','FontSize',15);
+        set(gcf, 'Position',  [100, 500, 700, 500])
+        % set(gca,'FontSize',14)
+%         grid on
+        xline(0,'k--')
+        if EventType == 'target'
+            xline(-0.3,'r--')
+        end
+        hold off 
+        legend({'no reward','reward'},'FontSize',10,'FontName','Arial')
+        
+        
+        fname = strcat(dir_out_region,sprintf('Average_BETA_DIFFERENCE_vs_time_reg_%s_event_%s.pdf',reg,EventType));
         saveas(fig,fname)
 %         
 %         

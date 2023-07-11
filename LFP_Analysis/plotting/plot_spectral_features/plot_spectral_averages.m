@@ -10,7 +10,7 @@ clear all;  close all;
 
 dir_in = 'E:\Output\GINO\test_stats\'; % directory input for t_stats
 dir_out = 'E:\Output\GINO\Figures\avg_results_freq_vs_time\rwd_norwd\';
-Events = ["target","stop"];
+Events = ["target"];
 show_fig = 1;
 
 
