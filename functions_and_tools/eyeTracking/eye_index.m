@@ -10,7 +10,7 @@
 %
 % @ Gino Del Ferraro, July 2023 
 
-function [eyeidx] = eye_index(experiments)
+function [eyeidx] = eye_index(experiments,sess_range)
 
 for sess = 1:sess_range
     ntrials = size(experiments.sessions(sess).behaviours.stats.pos_rel.x_targ,2);

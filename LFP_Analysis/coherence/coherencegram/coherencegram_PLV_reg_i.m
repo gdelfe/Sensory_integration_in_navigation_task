@@ -7,6 +7,9 @@
 % 
 % Computations are done for one session, one event, and a given reg_i
 % in order to parallelize the calculations on a HPC cluster.
+%
+% USE: to be launched directly as a function, either on a local computer or
+% on the HPC clusters. Computations done by monkey, sess, EventType, region
 % 
 % INPUT: monkey name, session, event type, brain region i
 %
@@ -51,7 +54,7 @@ fk = 100; % frequency upper value
 
 % load stat density structure with LFPs data 
 load(strcat(dir_in,sprintf('stats_%s_all_events_R_NR_density_clean.mat',monkey)));
-
+disp(["Stats data loaded - high/low "])
 
 % compute coherencegrams, PLV, and phase difference, across all channel-pairs, for a given session                                      
 [coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats,sess,EventType,reg_i,fk,tapers,dn);

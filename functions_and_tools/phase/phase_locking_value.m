@@ -27,7 +27,7 @@
 
 % @ Gino Del Ferraro, NYU, May 2023
 
-function [PLV,PLV_std,circ_mean_phase_diff,circ_std_phase_diff] = phase_locking_value(y,z,low_cutoff,high_cutoff,Fs)
+function [PLV,PLV_std,circ_mean_phase_diff,circ_std_phase_diff, PLV_trial] = phase_locking_value(y,z,low_cutoff,high_cutoff,Fs)
 
 % Assuming you have a 3D matrix for each signal with dimensions (time x trials x channels)
 % Example: y(trial, time), z(trial, time)
@@ -79,6 +79,8 @@ circ_std_phase_diff = circ_std(phase_diff_all_trials,[],[],2);
 % Calculate the Phase Locking Value (PLV)
 PLV = abs(mean(exp(1i * phase_diff_all_trials), 2)); % PLV mean across trials for a given channel-pair 
 PLV_std = std(exp(1i * phase_diff_all_trials),[], 2); % PLV std across trials for a given channel-pair
+
+PLV_trial = exp(1i * phase_diff_all_trials); % PLV by trial
 
 end 
 
