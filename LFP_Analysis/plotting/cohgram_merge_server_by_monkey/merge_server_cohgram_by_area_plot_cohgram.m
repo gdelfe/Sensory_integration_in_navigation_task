@@ -9,7 +9,7 @@ monkey = "Schro";
 
 reg_i = "PPC";
 reg_j = "PPC"
-EventType = "stop";
+EventType = "target";
 n_sess = 3;
 
 
@@ -17,8 +17,8 @@ dir_in = dir_in + monkey + '\' + EventType + '\';
 dir_in_phase = dir_in_phase + monkey + '\' + EventType + '\';
 dir_out_main = 'E:\Output\GINO\Figures\cohgram_all_channels';
 
-    
-    
+
+
 PLV_tot = {};
 cohgram_tot =[];
 
@@ -37,8 +37,11 @@ end
 % Means across sessions
 [cohgram_mean, PLV_mean] = PLV_and_cohgram_mean_std_across_sessions(PLV_tot,cohgram_tot,n_sess);
 
-
 field_names = {'high den NR','high den R', 'low den NR', 'low den R'};
+
+% Mean across conditions
+[PLV_avg_OF] = PLV_avg_across_conditions(PLV_mean);
+
 
 
 fieldNames = fieldnames(PLV_mean);
@@ -50,7 +53,7 @@ for i = 1:numel(fieldNames)
     if ~exist(dir_out, 'dir')
         mkdir(dir_out)
     end
-
+    
     % THETA %%%%%%%%%%%%%%%%%%%%%%%
     
     % Phase Locking Value
@@ -86,24 +89,31 @@ for i = 1:numel(fieldNames)
     
     % PLV
     fig = figure;
-    tvimage(cohgram_mean.high_den_NR.cohgram)
+    shadedErrorBar(ts,PLV_avg_theta,PLV_sem_theta,'lineprops',{'color',"#ff0000"},'patchSaturation',0.4); hold on
+    xlabel('time (sec)')
+    ylabel('PLV')
+    title(sprintf('PLV - Theta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
+    
+    xline(-0.3,'--r'); % target onset
+    xline(0,'--k') % target offset
+    
     
     fig_name = strcat(sprintf('%s_PLV_THETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
     saveas(fig,strcat(dir_out,fig_name))
     
     % Phase difference
-    fig = figure;
-    shadedErrorBar(ts,phase_avg_theta,phase_sem_theta,'lineprops',{'color',"#3385ff"},'patchSaturation',0.4);
-    xlabel('time (sec)')
-    ylabel('Phase Difference')
-    title(sprintf('Phase Difference - Theta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
-    
-    xline(0,'--k');
-    xline(-0.3,'--r'); % target onset
-    xline(0,'--k') % target offset
-    
-    fig_name = strcat(sprintf('%s_Phase_Diff_THETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
-    saveas(fig,strcat(dir_out,fig_name))
+%     fig = figure;
+%     shadedErrorBar(ts,phase_avg_theta,phase_sem_theta,'lineprops',{'color',"#3385ff"},'patchSaturation',0.4);
+%     xlabel('time (sec)')
+%     ylabel('Phase Difference')
+%     title(sprintf('Phase Difference - Theta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
+%     
+%     xline(0,'--k');
+%     xline(-0.3,'--r'); % target onset
+%     xline(0,'--k') % target offset
+%     
+%     fig_name = strcat(sprintf('%s_Phase_Diff_THETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
+%     saveas(fig,strcat(dir_out,fig_name))
     
     % BETA %%%%%%%%%%%%%%%%%%%%%%%
     
@@ -122,17 +132,44 @@ for i = 1:numel(fieldNames)
     saveas(fig,strcat(dir_out,fig_name))
     
     % Phase difference
-    fig = figure;
-    shadedErrorBar(ts,phase_avg_beta,phase_sem_beta,'lineprops',{'color',"#ff8533"},'patchSaturation',0.4);
-    xlabel('time (sec)')
-    ylabel('Phase Difference')
-    title(sprintf('Phase Difference - Beta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
-    
-    xline(0,'--k');
-    xline(-0.3,'--r'); % target onset
-    xline(0,'--k') % target offset
-    
-    fig_name = strcat(sprintf('%s_Phase_Diff_BETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
-    saveas(fig,strcat(dir_out,fig_name))
+%     fig = figure;
+%     shadedErrorBar(ts,phase_avg_beta,phase_sem_beta,'lineprops',{'color',"#ff8533"},'patchSaturation',0.4);
+%     xlabel('time (sec)')
+%     ylabel('Phase Difference')
+%     title(sprintf('Phase Difference - Beta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
+%     
+%     xline(0,'--k');
+%     xline(-0.3,'--r'); % target onset
+%     xline(0,'--k') % target offset
+%     
+%     fig_name = strcat(sprintf('%s_Phase_Diff_BETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
+%     saveas(fig,strcat(dir_out,fig_name))
     
 end
+
+
+dir_out_avg = strcat(dir_out_main,'\' + reg_i + '_' + reg_j + '\' + EventType + '\');
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%
+% AVERAGES ACROSS CONDITIONS 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% THETA %%%%%%%%%%%%%%%%%%%%%%%
+% PLV
+fig = figure;
+shadedErrorBar(PLV_avg_OF.ts,PLV_avg_OF.theta,PLV_avg_OF.theta_sem,'lineprops',{'color',"#ff0000"},'patchSaturation',0.4); hold on
+xlabel('time (sec)')
+ylabel('PLV')
+title(sprintf('PLV - Theta - %s - %s, %s - %s',monkey,f_name,reg_i,reg_j))
+
+xline(-0.3,'--r'); % target onset
+xline(0,'--k') % target offset
+
+
+fig_name = strcat(sprintf('%s_PLV_THETA_%s_%s_%s.jpg',monkey,fieldName,reg_i,reg_j));
+saveas(fig,strcat(dir_out,fig_name))
+
+
+
