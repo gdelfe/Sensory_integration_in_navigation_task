@@ -17,7 +17,7 @@ for sess = sess_range
     stats(sess).ids.sess_date = experiments.sessions(sess).sess_date;
     
     % get indexes of trials with target always OFF
-    [ind_rwd1,ind_rwd2] = get_indx_trials_target_OFF_density(experiments,sess);
+    [ vft,ind_rwd2] = get_indx_trials_target_OFF_density(experiments,sess);
 %     ind_rwd = [ind_rwd1,ind_rwd2]; % include both rewarded and unrewarded trials 
 %     ind_rwd = ind_rwd2; % include only rewarded trials 
     

@@ -8,10 +8,10 @@ clear all; close all;
 dir_in = 'E:\Output\GINO\cohgram_all_channels\';
 dir_in_phase = 'E:\Output\GINO\phase_PLV\';
 
-monkeys = ["Schro","Quigley"];
+monkeys = ["Schro","Vik"];
 
-reg_i = "MST";
-reg_j = "PCC"
+reg_i = "PFC";
+reg_j = "PPC"
 EventType = "target";
 n_sess = 3;
 

@@ -60,7 +60,7 @@ disp(["Stats data loaded - high/low "])
 [coherencegram,PLV_sess] = compute_coherencegram_and_PLV_regi_R_NR(stats,sess,EventType,reg_i,fk,tapers,dn);
       
 % save results 
-save(strcat(dir_out,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)),'coherencegram','-v7.3');
+% save(strcat(dir_out,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)),'coherencegram','-v7.3');
 save(strcat(dir_out_phase,sprintf('PLV_phase_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_i)),'PLV_sess','-v7.3');
 
 

@@ -14,7 +14,7 @@ function [eyeidx] = eye_index(experiments,sess_range)
 
 for sess = 1:sess_range
     ntrials = size(experiments.sessions(sess).behaviours.stats.pos_rel.x_targ,2);
-    
+  
     for i = 1:ntrials
         
         % spike 2 frame of reference
