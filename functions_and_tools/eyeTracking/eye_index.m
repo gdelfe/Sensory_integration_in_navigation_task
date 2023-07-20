@@ -12,7 +12,7 @@
 
 function [eyeidx] = eye_index(experiments,sess_range)
 
-for sess = 1:sess_range
+for sess = sess_range
     ntrials = size(experiments.sessions(sess).behaviours.stats.pos_rel.x_targ,2);
   
     for i = 1:ntrials
@@ -21,9 +21,13 @@ for sess = 1:sess_range
         x = experiments.sessions(sess).behaviours.stats.pos_rel.x_targ{i};
         y = experiments.sessions(sess).behaviours.stats.pos_rel.y_targ{i};
         z = 10;
+        delta = 3.5; % inter-ocular distance 
         
         % Ideal Observer frame of reference
-        [IOx,IOy,IOx,IOy] = world2eye(x,y,-z,0); % delta is zero, so left and right are the same values
+        [IOxle,IOyle,IOxre,IOyre] = world2eye(x,y,-z,delta); % delta is zero, so left and right are the same values
+        % average left and right eye for ideal observer
+        IOx = (IOxle + IOxre)/2;
+        IOy = (IOyle + IOyre)/2;
         
         % Monkey frame of reference
         xl = experiments.sessions(sess).behaviours.trials(i).continuous.yle; % left eye x
@@ -41,9 +45,16 @@ for sess = 1:sess_range
         error = (IOx - xm).^2 + (IOy - ym).^2; % error between Monkey and Ideal observer frame of reference
         IO = (IOx.^2 + IOy.^2);
         % eye tracking index
-        EI = sqrt( 1 - error./IO)';
+        EI2 = ( 1 - error./IO)'; % in order to have the eye-tracking index we need to take the sqrt of this. Note: negative values of EI2 should be considere invalid
         
-        eyeidx(sess).trial(i).idx = EI;
+        
+        
+        
+        
+%         figure;
+%         plot(ts,) 
+%         
+        eyeidx(sess).trial(i).idx = EI2;
         eyeidx(sess).trial(i).ts = ts;
         
     end

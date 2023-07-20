@@ -1,14 +1,18 @@
+addpath(genpath('C:\Users\gd2112\Documents\Navigation_task'))
+addpath(genpath('C:\Users\gd2112\Documents\MATLAB'))
+addpath(genpath('C:\Users\gd2112\Documents\LFP_firefly'))
+
 % clear all; close all;
 clearvars -except experiments
 
 % %%%%%%%%%%%%%%%%
 % PATHS
 % %%%%%%%%%%%%%%%
-monkey = "Vik";
+monkey = "Bruno";
 % load('E:\Output\GINO\experiments_lfp_Quigley_185_188_207_behv_lfps.mat')
-% load('E:\Output\GINO\experiments_lfp_Bruno_41_42_43_behv_lfps.mat')
+load('E:\Output\GINO\experiments_lfp_Bruno_41_42_43_behv_lfps.mat')
 % load('E:\Output\GINO\experiments_lfp_Schro_86_107_113_behv_lfps.mat')
-load('E:\Output\GINO\experiments_lfp_Vik_1_2_4_behv_lfps_cleaned.mat')
+% load('E:\Output\GINO\experiments_lfp_Vik_1_2_4_behv_lfps_cleaned.mat')
 % load('E:\Output\GINO\stats\stats_Bruno_v2.mat')
 dir_out = 'E:\Output\GINO\stats\';
 
