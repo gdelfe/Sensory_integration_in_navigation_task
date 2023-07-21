@@ -11,4 +11,6 @@ eyeidx = remove_NaN_from_EyeIndex(eyeidx,sess_range);
 % Find common time window for all the trials and interpolate value of eye index
 eyeinter = interpolate_eyeidx_values(eyeidx,sess_range);
 
+plot_per_trial(eyeinter,sess_range);
 
+eye_avg = average_eyeidx_per_session(eyeinter,sess_range);

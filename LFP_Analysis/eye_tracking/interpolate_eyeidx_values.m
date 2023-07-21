@@ -40,15 +40,17 @@ for sess = sess_range
         
     end
     
-      
+
+    
     % %%%%%%%%%%%%%%%%%%%
     % Shorten the time ts and EI to the time window that is shared across
     % trials and interpolate the value of EI such that, across trials, EI
     % refers to the same time point
     % %%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    L = idx_M_ts - idx_m_ts + 1; % length of the interpolated time series 
-    ts_p = linspace(m_ts,M_ts,L); % interpolated time series 
+    sampling = 0.006;
+    size_ts = round((max_ts - min_ts)/sampling) + 1; % length of the interpolated time series 
+    ts_p = linspace(min_ts,max_ts,size_ts); % interpolated time series 
     
     for trial = 1:ntrials_NR
         
@@ -63,11 +65,11 @@ for sess = sess_range
         EI = EI(idx_m_ts:idx_M_ts); % shorten EI
         EI_interp = interp1(ts_trial, EI, ts_p, 'linear'); % interpolate EI
         
-        eyeinter(sess).rwd(1).trial(trial).idx = EI_interp;
+        eyeinter(sess).rwd(1).trial(trial).idx = EI_interp(1:end-1);
 
     end
     
-    eyeinter(sess).rwd(1).ts_interp = ts_p; % interpolated ts 
+    eyeinter(sess).rwd(1).ts_interp = ts_p(1:end-1); % interpolated ts 
     
     for trial = 1:ntrials_R
         
@@ -82,11 +84,11 @@ for sess = sess_range
         EI = EI(idx_m_ts:idx_M_ts); % shorten EI
         EI_interp = interp1(ts_trial, EI, ts_p, 'linear'); % interpolate EI
         
-        eyeinter(sess).rwd(2).trial(trial).idx = EI_interp;
+        eyeinter(sess).rwd(2).trial(trial).idx = EI_interp(1:end-1);
         
     end
     
-     eyeinter(sess).rwd(2).ts_interp = ts_p; % interpolated ts 
+     eyeinter(sess).rwd(2).ts_interp = ts_p(1:end-1); % interpolated ts 
     
 end
 

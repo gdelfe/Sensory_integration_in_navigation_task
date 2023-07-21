@@ -19,7 +19,7 @@ monkey = "Schro";
 reg_i = "MST";
 reg_j = "PPC"
 EventType = "target";
-n_sess = 3;
+sess_range = [1,2,3];
 
 
 dir_in = dir_in + monkey + '\' + EventType + '\';
@@ -50,7 +50,7 @@ cohgram_tot =[];
 
 
 % Load data across sessions for one monkey
-for sess = 1:n_sess
+for sess = sess_range
     
     load(strcat(dir_in,sprintf('coherencegram_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_j)));
     load(strcat(dir_in_phase,sprintf('PLV_phase_%s_sess_%d_event_%s_%s_%s.mat',monkey,sess,EventType,reg_i,reg_j)));
@@ -61,7 +61,7 @@ for sess = 1:n_sess
 end
 
 % Means across sessions
-[cohgram_mean, PLV_mean] = PLV_and_cohgram_mean_std_across_sessions(PLV_tot,cohgram_tot,n_sess);
+[cohgram_mean, PLV_mean] = PLV_and_cohgram_mean_std_across_sessions(PLV_tot,cohgram_tot,sess_range);
 
 f_name = strcat(sprintf('%s_PLV_Phase_diff_high_low_rwd_norwd_%s_%s.mat',monkey,reg_i,reg_j));
 save(strcat(dir_out_PLV_data_avg,f_name),'PLV_mean');

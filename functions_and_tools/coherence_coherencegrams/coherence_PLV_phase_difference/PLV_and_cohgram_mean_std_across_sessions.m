@@ -8,14 +8,14 @@
 % @ Gino Del Ferraro, NYU, June 2023
 
 
-function [cohgram_mean, PLV_mean] = PLV_and_cohgram_mean_std_across_sessions(PLV_tot,cohgram_tot,n_sess)
+function [cohgram_mean, PLV_mean] = PLV_and_cohgram_mean_std_across_sessions(PLV_tot,cohgram_tot,sess_range)
 
 % Create empty structure with the same field structure of PLV_sess and coherencegram 
 cohgram_mean = initializeStructure(cohgram_tot{1});
 PLV_mean = initializeStructure(PLV_tot{1});
 
 L = length(PLV_tot{1}.high_den_NR.ts) - 1;
-for sess = 1:n_sess
+for sess = sess_range
     
     % Iterate over the field names and concatenate results across sessions
     % for PLV, phase difference, coherencegrams in theta and beta range
